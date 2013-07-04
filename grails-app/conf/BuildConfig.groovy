@@ -16,6 +16,7 @@ grails.project.dependency.resolution = {
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
+    legacyResolve true // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
@@ -49,6 +50,7 @@ grails.project.dependency.resolution = {
         // http://support.cloudfoundry.com/entries/21014643-Grails-Spring-Security-deployment-problem
         // to fix cf/springsecurity issue
         compile ":webxml:1.4.1"
+        compile ':spring-security-core:1.2.7.3'
     }
 }
 

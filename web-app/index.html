@@ -19,25 +19,6 @@
 </head>
 <body>
 
-<!-- login page -->
-<section data-role="page" id="login-page" data-theme="a">
-
-    <img style="display: block;margin: auto;padding:1em;width: 50%" src="img/ThreeCircle.png"/>
-
-    <form id="form-update-user" name="form-update-user">
-        <div style="padding-left:3em;padding-right:3em">
-            <input style="text-align: center;" data-theme="e" type="text" class="validate[required]" placeholder="username" name="j_username" id="username" value=""/>
-            <input style="text-align: center;" data-theme="e" type="password" placeholder="password" name="j_password" id="password" value=""/>
-            <br/>
-            <a data-role="button" data-theme="e" id="submit-login">Login</a>
-        </div>
-
-        <input type="hidden" name="id" id="input-user-id"/>
-        <input type="hidden" name="version" id="input-user-version"/>
-        <input type="hidden" name="class" id="input-user-class"/>
-    </form>
-</section>
-
 <!-- Home: timeline -->
 <section data-role="page" id="section-list-checkin"class="flow">
     <div data-role="panel" data-theme="a" id="mypanel">
@@ -45,24 +26,6 @@
         <a href="#section-list-place" data-role="button" data-icon="star">Places</a>
         <a href="#section-list-user"  data-role="button" data-icon="alert">Friends</a>
         <a href="#mypanel" data-role="button" data-icon="grid">Settings</a>
-    </div>
-    <div data-role="header" data-position="fixed" data-theme="b" data-id="myHeader">
-        <div id="navbar1" data-role="navbar" data-iconpos="top">
-            <ul>
-                <li class="list-icon">
-                    <a href="#mypanel" data-role="button" data-icon="bars" class="big">&nbsp;</a>
-                </li>
-                <li class="list-search">
-                    <input data-theme="c" class="search-header" placeholder="Find a place to go"/>
-                </li>
-                <li class="list-icon">
-                    <!---------------------------------------------->
-                    <!-- TODO: add name with id: logged-username -->
-                    <!---------------------------------------------->
-                    <a id="logged-username" href="" data-role="button" data-transition="fade" >&nbsp;</a>
-                </li>
-            </ul>
-        </div>
     </div>
     <div id="myContent"  data-role="content" class="flow">
         <div id="map_canvas" class="map"></div>

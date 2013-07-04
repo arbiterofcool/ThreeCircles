@@ -1,11 +1,15 @@
 package threecircles
 
 import grails.converters.deep.JSON
+import grails.plugins.springsecurity.Secured
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class CheckinController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -50,8 +54,25 @@ class CheckinController {
     }
 
     def list() {
-      params.max = Math.min(params.max ? params.int('max') : 10, 100)
-      render Checkin.list(params) as JSON
+        User me = User.get(springSecurityService.principal.id)
+        def listOfCheckins = Checkin.findAllByOwner(me)
+        me.friends.each {
+            def result = Checkin.findAllByOwner(it)
+            if (result.size() > 0) {
+                result.each { itt ->
+                    listOfCheckins << itt
+                }
+            }
+        }
+        def builder = new groovy.json.JsonBuilder()
+        def checkinsJSON = listOfCheckins as JSON
+        def checkinString =  checkinsJSON.toString()
+        def info = builder  {
+            firstname me.firstname
+            checkins checkinString
+        }
+        String builderString = builder.toString();
+        render builderString
     }
 
     def save() {
