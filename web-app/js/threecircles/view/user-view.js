@@ -4,7 +4,12 @@ threecircles.view = threecircles.view || {};
 threecircles.view.userview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+
+    that.init = function () {
+    that.listButtonClicked.notify();
+    };
     
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-user').empty();
@@ -13,6 +18,7 @@ threecircles.view.userview = function (model, elements) {
             renderElement(value);
         });
         $('#list-user').listview('refresh');
+        
     });
 
     that.model.createdItem.attach(function (data, event) {
@@ -108,16 +114,16 @@ threecircles.view.userview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-user').validationEngine('hide');
         $('#form-update-user').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         createElement();
+        that.editButtonClicked.notify();
     });
 
     var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-user').validationEngine('hide');
         $('#form-update-user').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         showElement(dataId);
+        that.editButtonClicked.notify();
     };
 
     var createElement = function () {
@@ -144,8 +150,11 @@ threecircles.view.userview = function (model, elements) {
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);

@@ -4,8 +4,13 @@ threecircles.view = threecircles.view || {};
 threecircles.view.placeview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+
+    that.init = function () {
+    that.listButtonClicked.notify();
+    };
     var mapServiceList = grails.mobile.map.googleMapService();
     var mapServiceForm = grails.mobile.map.googleMapService();
+    
 
     // Register events
     that.model.listedItems.attach(function (data) {
@@ -16,6 +21,7 @@ threecircles.view.placeview = function (model, elements) {
             renderElement(value);
         });
         $('#list-place').listview('refresh');
+        
         mapServiceList.refreshCenterZoomMap();
     });
 
@@ -157,8 +163,11 @@ threecircles.view.placeview = function (model, elements) {
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
