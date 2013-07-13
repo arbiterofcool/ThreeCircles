@@ -17,7 +17,7 @@ class BootStrap {
         // TODO the same for Place, Comment, Checkin
         // For Wein latitude:48.217349004974416, longitude: 16.407538767645292
         //
-        // Do not forget to add a checkin for confess
+        // Do not forget to add a checkin for this conference
         //-----------------------------------------------------------------------------
     }
     def destroy = {
