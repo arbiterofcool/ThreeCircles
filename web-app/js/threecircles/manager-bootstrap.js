@@ -30,6 +30,6 @@ threecircles.load = (function () {
 
     var init = function() {
         var managerObject = grails.mobile.mvc.manager(threecircles.configuration);
-        managerObject.domainsObjects[threecirclesweb5.mainView].view.init();
+        managerObject.domainsObjects[threecircles.mainView].view.init();
     }
 }());

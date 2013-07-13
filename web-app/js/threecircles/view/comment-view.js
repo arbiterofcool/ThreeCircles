@@ -123,27 +123,23 @@ threecircles.view.commentview = function (model, elements) {
         $('#form-update-comment').validationEngine('hide');
         $('#form-update-comment').validationEngine({promptPosition: 'bottomLeft'});
         showElement(dataId);
-        that.editButtonClicked.notify();
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
     };
 
     var createElement = function () {
         resetForm('form-update-comment');
         $.mobile.changePage($('#section-show-comment'));
         $('#delete-comment').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
     };
 
     var showElement = function (id) {
         resetForm('form-update-comment');
+        showDependentElement(id);
         var element = that.model.items[id];
-        var value = element['user.id'];
-        if (!value) {
-            value = element['user'];
-        }
-        if (!value || (value === Object(value))) {
-           value = element.user.id;
-        }
-        $('select[data-gorm-relation="many-to-one"][name="user"]').val(value).trigger("change");
-        
         $.each(element, function (name, value) {
             var input = $('#input-comment-' + name);
             if (input.attr('type') != 'file') {
@@ -162,6 +158,19 @@ threecircles.view.commentview = function (model, elements) {
         $('#delete-comment').show();
         $.mobile.changePage($('#section-show-comment'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+        var value = element['user.id'];
+        if (!value) {
+            value = element['user'];
+        }
+        if (!value || (value === Object(value))) {
+           value = element.user.id;
+        }
+        $('select[data-gorm-relation="many-to-one"][name="user"]').val(value).trigger("change");
+        
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {
@@ -204,6 +213,7 @@ threecircles.view.commentview = function (model, elements) {
             });
             select.val(options[0]);
         }
+        select.selectmenu("refresh");
     };
 
     var renderDependentList = function (dependentName, items) {

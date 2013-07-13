@@ -157,6 +157,7 @@ threecircles.view.placeview = function (model, elements) {
 
     var showElement = function (id) {
         resetForm('form-update-place');
+        showDependentElement(id);
         var element = that.model.items[id];
         $.each(element, function (name, value) {
             var input = $('#input-place-' + name);
@@ -181,6 +182,10 @@ threecircles.view.placeview = function (model, elements) {
         $('#delete-place').show();
         $.mobile.changePage($('#section-show-place'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {
