@@ -15,7 +15,7 @@ class BootStrap {
         // myUser.save()
         //
         // TODO the same for Place, Comment, Checkin
-        // For Wein latitude:48.217349004974416, longitude: 16.407538767645292
+        // For Minneapolis latitude:48.83, longitude: 93.47
         //
         // Do not forget to add a checkin for this conference
         //-----------------------------------------------------------------------------

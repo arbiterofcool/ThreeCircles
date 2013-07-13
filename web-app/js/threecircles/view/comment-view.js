@@ -4,7 +4,12 @@ threecircles.view = threecircles.view || {};
 threecircles.view.commentview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
-    
+
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-comment').empty();
@@ -13,6 +18,7 @@ threecircles.view.commentview = function (model, elements) {
             renderElement(value);
         });
         $('#list-comment').listview('refresh');
+
     });
 
     that.model.createdItem.attach(function (data, event) {
@@ -30,7 +36,7 @@ threecircles.view.commentview = function (model, elements) {
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-comment'));
             }
-		}
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -108,43 +114,42 @@ threecircles.view.commentview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-comment').validationEngine('hide');
         $('#form-update-comment').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         createElement();
+        that.editButtonClicked.notify();
     });
 
     var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-comment').validationEngine('hide');
         $('#form-update-comment').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         showElement(dataId);
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
     };
 
     var createElement = function () {
         resetForm('form-update-comment');
         $.mobile.changePage($('#section-show-comment'));
         $('#delete-comment').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
     };
 
     var showElement = function (id) {
         resetForm('form-update-comment');
+        showDependentElement(id);
         var element = that.model.items[id];
-        var value = element['user.id'];
-        if (!value) {
-            value = element['user'];
-        }
-        if (!value || (value === Object(value))) {
-           value = element.user.id;
-        }
-        $('select[data-gorm-relation="many-to-one"][name="user"]').val(value).trigger("change");
-        
         $.each(element, function (name, value) {
             var input = $('#input-comment-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -153,6 +158,19 @@ threecircles.view.commentview = function (model, elements) {
         $('#delete-comment').show();
         $.mobile.changePage($('#section-show-comment'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+        var value = element['user.id'];
+        if (!value) {
+            value = element['user'];
+        }
+        if (!value || (value === Object(value))) {
+            value = element.user.id;
+        }
+        $('select[data-gorm-relation="many-to-one"][name="user"]').val(value).trigger("change");
+
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {
@@ -179,7 +197,7 @@ threecircles.view.commentview = function (model, elements) {
             });
         }
     };
-    
+
 
     var refreshSelectDropDown = function (select, newOptions) {
         var options = null;
@@ -195,6 +213,7 @@ threecircles.view.commentview = function (model, elements) {
             });
             select.val(options[0]);
         }
+        select.selectmenu("refresh");
     };
 
     var renderDependentList = function (dependentName, items) {
@@ -226,7 +245,7 @@ threecircles.view.commentview = function (model, elements) {
         });
         refreshMultiChoices(oneToMany, dependentName, options);
     };
-    
+
     var createListItem = function (element) {
         var li, a = $('<a>');
         a.attr({
@@ -238,7 +257,7 @@ threecircles.view.commentview = function (model, elements) {
         a.on('vclick', function(event) {
             show(element.id, event);
         });
-        
+
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);
