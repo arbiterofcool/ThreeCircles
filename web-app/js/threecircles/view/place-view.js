@@ -131,6 +131,7 @@ threecircles.view.placeview = function (model, elements) {
     });
 
     that.elements.add.on('vclick', function (event) {
+        $(this).addClass('ui-disabled');
         event.stopPropagation();
         $('#form-update-place').validationEngine('hide');
         $('#form-update-place').validationEngine({promptPosition: 'bottomLeft'});

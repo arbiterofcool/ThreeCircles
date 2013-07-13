@@ -4,18 +4,71 @@ threecircles.view = threecircles.view || {};
 threecircles.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+    that.loginButtonClicked = grails.mobile.event();
+    that.logoutButtonClicked = grails.mobile.event();
+
     var timeline = threecirclesconfess.view.timeline();
     var geolocationSearch = threecirclesconfess.view.geolocation();
     var geolocationCheckin = threecirclesconfess.view.geolocation();
-    var geolocationBackground = threecirclesconfess.view.geolocation()
+    var geolocationBackground = threecirclesconfess.view.geolocation();
 
+    var displayTimeline = function (data, event) {
+        if (data.items.errors) {
+            $.each(data.items.errors, function(index, error) {
+                $('#input-user-' + error.field).validationEngine('showPrompt',error.message, 'fail');
+            });
+            event.stopPropagation();
+        } else if (data.items.message || data.items.error) {
+            showGeneralMessage(data.items.message ? data.items.message : data.items.error, event);
+        } else {
+            if (!data.items.NOTIFIED) {
+                var a = $('<a>');
+                a.attr({
+                    id: 'logged-username',
+                    'data-role': 'button',
+                    'data-transition': 'fade'
+                });
+                a.on('vclick', function(event) {
+                    logout(event);
+                });
+                a.text('Logout '+ model.username);
 
-    that.model.listedItems.attach(function (data) {
-        $('#list-checkin').empty();
-        var key, items = model.getItems();
-        addAndSort(items);
-        $('#list-checkin').listview('refresh');
+                $('#logged-username').replaceWith(a);
+                $('#logged-username').button();
+                $('#list-checkin').empty();
+                var key, items = model.getItems();
+                addAndSort(items);
+                $('#list-checkin').listview('refresh');
+                $.mobile.changePage($('#section-list-checkin'));
+            }
+        }
+    };
+
+    that.model.logged.attach(displayTimeline);
+
+    that.model.loggedOut.attach(function(event) {
+        //event.stopPropagation();
+        top.location='';
     });
+
+    $('#submit-login').on('click', function (event) {
+        event.stopPropagation();
+        $('#form-update-user').validationEngine('hide');
+        if($('#form-update-user').validationEngine('validate')) {
+            var obj = grails.mobile.helper.toObject($('#form-update-user').find('input, select'));
+            var newElement = obj;
+            that.loginButtonClicked.notify(newElement, event);
+        }
+    });
+
+    var logout = function (event) {
+        event.stopPropagation();
+        that.logoutButtonClicked.notify({}, event);
+    };
+
+
+    // Register events
+    that.model.listedItems.attach(displayTimeline);
 
     var addAndSort = function(items, item) {
         $('#list-checkin-parent').empty();
@@ -31,6 +84,14 @@ threecircles.view.checkinview = function (model, elements) {
             $('#list-checkin-parent').append(createListItemCustom(value, whenInfo)).trigger("create");
         });
     };
+
+    $('#section-list-checkin').on('swiperight', function(event) {
+        $('#mypanel').panel('open');
+    });
+
+    $('#section-list-checkin').on('swipeleft', function(event) {
+        $('#mypanel').panel('close');
+    });
 
     var createListItemCustom = function (element, timelineDate) {
         var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
@@ -71,6 +132,7 @@ threecircles.view.checkinview = function (model, elements) {
             event.stopPropagation();
         } else if (data.item.message) {
             showGeneralMessage(data.item.message, event);
+
         } else {
             resetForm('form-update-checkin');
 
@@ -85,7 +147,7 @@ threecircles.view.checkinview = function (model, elements) {
 
     // user interface actions
     that.elements.list.on('pageinit', function (e) {
-        that.listButtonClicked.notify({user: "me"});
+        that.listButtonClicked.notify();
     });
 
     that.elements.list.on('pageshow', function (e) {
@@ -96,15 +158,15 @@ threecircles.view.checkinview = function (model, elements) {
         that.selectedPlace = place;
     };
 
-    $('#section-show-checkin').on( 'pageshow', function (event) {
-        geolocationSearch.showMapWithPlaces('map_canvas2', 'list-place', storeLatLng);
+    $("#section-show-checkin").on('pageshow', function (event) {
+        geolocationSearch.showMapWithPlaces('map_canvas2', "list-place", storeLatLng);
     });
 
-    $('#checkin').on( 'pageshow', function (event) {
+    $("#checkin").on('pageshow', function (event) {
         geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
     });
 
-    $('#checkin-submit').on( 'vclick', function (event) {
+    $("#checkin-submit").on('vclick', function (event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
@@ -131,10 +193,7 @@ threecircles.view.checkinview = function (model, elements) {
 
     var resetForm = function (form) {
         $('#textarea-1').val('');
-
-        $('#div-for-upload').css('background-image', 'url("images/camera.png")');
-        $('#input-checkin-photo').attr('data-value', '');
-
+        $('#input-checkin-photo').parent().css('background-image', 'url("images/camera.png")');
         $('input[data-type="date"]').each(function() {
             $(this).scroller('destroy').scroller({
                 preset: 'date',
@@ -145,96 +204,24 @@ threecircles.view.checkinview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        if(div) {
-            if (div[0]) {
+        if(div && div[0]) {
             div[0].reset();
-            }
             $.each(div.find('input:hidden'), function(id, input) {
                 if ($(input).attr('type') != 'file') {
                     $(input).val('');
+                } else {
+                    $(input).parent().css('background-image', 'url("images/camera.png")');
+                    $(input).attr('data-value', '');
                 }
             });
         }
     };
 
-    var showGeneralMessage = function(msg, event) {
-        $.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, msg, true );
+    var showGeneralMessage = function(data, event) {
+        $.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, data, true );
         setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
         event.stopPropagation();
     };
-
-    $('#submit-login').on('click', function (event) {
-        event.stopPropagation();
-        $('#form-update-user').validationEngine('hide');
-        if($('#form-update-user').validationEngine('validate')) {
-            var obj = grails.mobile.helper.toObject($('#form-update-user').find('input, select'));
-            var newElement = obj;
-            that.loginButtonClicked.notify(newElement, event);
-        }
-    });
-
-    that.loginButtonClicked = grails.mobile.event();
-
-    that.model.logged.attach(function (data, event) {
-        if (data.items.errors) {
-            $.each(data.items.errors, function(index, error) {
-                $('#input-user-' + error.field).validationEngine('showPrompt',error.message, 'fail');
-            });
-            event.stopPropagation();
-        } else if (data.items.message || data.items.error) {
-            showGeneralMessage(data.items.message ? data.items.message : data.items.error, event);
-        } else {
-            if (!data.items.NOTIFIED) {
-                var a = $('<a>');
-                a.attr({
-                    id: 'logged-username',
-                    'data-role': 'button',
-                    'data-transition': 'fade'
-                });
-                a.text(''+ model.username);
-
-                $('#logged-username').replaceWith(a);
-                $('#logged-username').button();
-                $('#list-checkin').empty();
-                var key, items = model.getItems();
-                addAndSort(items);
-                $('#list-checkin').listview('refresh');
-                $.mobile.changePage($('#section-list-checkin'));
-            }
-        }
-    });
-
-    $('#section-list-checkin').on('swiperight', function(event) {
-        $('#mypanel').panel('open');
-    });
-
-    $('#section-list-checkin').on('swipeleft', function(event) {
-        $('#mypanel').panel('close');
-    });
-
-    $('#section-show-place').on('swiperight', function(event) {
-        $('#mypanel2').panel('open');
-    });
-
-    $('#section-show-place').on('swipeleft', function(event) {
-        $('#mypanel2').panel('close');
-    });
-
-    $('#section-list-place').on('swiperight', function(event) {
-        $('#mypanel3').panel('open');
-    });
-
-    $('#section-list-place').on('swipeleft', function(event) {
-        $('#mypanel3').panel('close');
-    });
-
-    $('#section-list-user').on('swiperight', function(event) {
-        $('#mypanel4').panel('open');
-    });
-
-    $('#section-list-user').on('swipeleft', function(event) {
-        $('#mypanel4').panel('close');
-    });
 
     return that;
 };

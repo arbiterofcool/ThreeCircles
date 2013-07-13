@@ -17,43 +17,8 @@ class CheckinController {
         redirect(action: "list", params: params)
     }
 
-    def login() {
-        def receivedUsername = params.j_username
-        def receivedPassword = params.j_password
-
-        def me = User.findByUsername(receivedUsername)
-        if (me && receivedPassword == me.password) {
-        //-----------------------------------------------------------------------------
-        // TODO add user to session
-        //-----------------------------------------------------------------------------
-        session["user"] = me
-        //-----------------------------------------------------------------------------
-        // end of TODO add user to session
-        //-----------------------------------------------------------------------------
-        def listOfCheckins = Checkin.findAllByOwner(me)
-        me.friends.each {
-            def result = Checkin.findAllByOwner(it)
-            if (result.size() > 0) {
-                result.each { itt ->
-                    listOfCheckins << itt
-                }
-            }
-        }
-        def builder = new groovy.json.JsonBuilder()
-        def checkinsJSON = listOfCheckins as JSON
-        def checkinString = checkinsJSON.toString()
-        def info = builder {
-            firstname me.firstname
-            checkins checkinString
-        }
-        String builderString = builder.toString();
-        render builderString
-        } else {
-           render "Error wrong username or password"
-        }
-    }
-
     def list() {
+
         User me = User.get(springSecurityService.principal.id)
         def listOfCheckins = Checkin.findAllByOwner(me)
         me.friends.each {
