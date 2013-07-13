@@ -98,6 +98,7 @@ grails.mobile.mvc.manager = function (configuration) {
             sync:sync,
             push: push
         };
+
     });
 
     $.each(configuration.domain, function () {

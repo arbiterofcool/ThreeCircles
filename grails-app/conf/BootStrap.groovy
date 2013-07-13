@@ -28,8 +28,8 @@ class BootStrap {
         Place paris = new Place(name: "Paris", latitude:48.8, longitude: 2.3, address:  "13 rue richard lenoir" )
         paris.save()
 
-        Place wien = new Place(name: "Wein", latitude:48.217349004974416, longitude: 16.407538767645292, address:  "Messe Wien Exhibition & Congress " )
-        wien.save()
+        Place minneapolis = new Place(name: "Minneapolis", latitude:48.83, longitude: 93.47, address:  "Gr8Conf US " )
+        minneapolis.save()
 
 
         testUser.addToFriends(fabrice)
@@ -42,10 +42,10 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date().time, place: wien, owner: testUser, photo: "")
-        confess.save()
-        confess.addToFriends(fabrice)
-        confess.save()
+        Checkin gr8conf = new Checkin(description: "Gr8Conf", when: new Date().time, place: minneapolis, owner: testUser, photo: "")
+        gr8conf.save()
+        gr8conf.addToFriends(fabrice)
+        gr8conf.save()
 
 
         Checkin devfestw = new Checkin(description: "devfestw", when: (new Date() - 25).time, place: paris, owner: testUser, photo:  "")
