@@ -10,6 +10,7 @@ grails.project.source.level = 1.6
 //grails.project.fork = [
 //   run: [maxMemory:1024, minMemory:64, debug:false, maxPerm:256]
 //]
+grails.plugin.location."html5-mobile-scaffolding" = "../html5-mobile-scaffolding"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -19,7 +20,7 @@ grails.project.dependency.resolution = {
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
-    legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
+    legacyResolve true // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
@@ -45,19 +46,11 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
-        runtime ":jquery:1.8.3"
-        runtime ":resources:1.1.6"
-
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.5"
-
-        build ":tomcat:$grailsVersion"
-
-        runtime ":database-migration:1.3.2"
-
-        compile ':cache:1.0.1'
+        plugins {
+            runtime ":hibernate:$grailsVersion"
+            runtime ":jquery:1.9.1"
+            build ":tomcat:$grailsVersion"
+            compile ":webxml:1.4.1"
+        }
     }
 }
