@@ -93,7 +93,9 @@ threecircles.view.geolocation = function () {
             html.append(span);
 
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 3:
+            //  Add an input of type 'file' with id 'input-checkin-photo'.
+            //  Just uncomment line
             //-----------------------------------------------------------------------------
             span = $('<span>');
             span.attr({
@@ -112,7 +114,7 @@ threecircles.view.geolocation = function () {
             span.append(input);
             html.append(span);
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 3: picture
             //-----------------------------------------------------------------------------
         } else {
             html = $('#div-bubble');
@@ -128,11 +130,14 @@ threecircles.view.geolocation = function () {
 
         if(init) {
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 4: picture
+            //  Use 3musketeers plugin camera service in grails.mobile.camera
+            //  to take the picture and display picture in input id input-checkin-photo
+            //  (defined above)
             //-----------------------------------------------------------------------------
             grails.mobile.camera.getPicture($("#input-checkin-photo"));
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 4: picture
             //-----------------------------------------------------------------------------
         }
     };
