@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.timeline = function () {
+threecircles.view.timeline = function () {
     var that = {};
     //-----------------------------------------------------------------------------
     //  TODO timeline.js
