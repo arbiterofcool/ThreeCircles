@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.timeline = function () {
+threecircles.view.timeline = function () {
     var that = {};
     var TEN_MINUTES = 600000;
     var ONE_DAY = 86400000;

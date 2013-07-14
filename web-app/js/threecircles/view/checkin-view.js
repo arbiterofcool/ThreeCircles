@@ -137,6 +137,7 @@ threecircles.view.checkinview = function (model, elements) {
     // user interface actions
     that.elements.list.on('pageinit', function (e) {
         that.listButtonClicked.notify();
+        geolocationBackground.showMapBackground('map_canvas', {}) ;
     });
 
     that.elements.list.on('pageshow', function (e) {
