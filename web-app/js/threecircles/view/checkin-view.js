@@ -21,21 +21,25 @@ threecircles.view.checkinview = function (model, elements) {
 
     //-----------------------------------------------------------------------------
     //  TODO render timeline
+    //  1. remove hard coded string'Gr8Conf US in Minneapolis' by dynamic value coming from element
+    //  To help you know what JSON is returned by Controller server side, put a break point in
+    //  your browser in this method and inspect element.
+    //  2. remove hard coded value for 'Corinne Krych' by value coming from element etc...
+    //  3. loop for all checkins
+    //  Leave harcoded place holder for pictures.
     //-----------------------------------------------------------------------------
     var createListItemCustom = function (element) {
         var html = '<div class="fs-object">';
         html += '<div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
             '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
             '<span class="description">' +
-            '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
-            element.place.name + '</span>' +
-            '<span class="address">' + element.place.address + '</span>' +
+            '<span class="name">Corinne Krych</span> at <span class="place">' +
+            'Gr8ConfUS</span>' +
+            '<span class="address">1301 2nd avenue S, MN55403</span>' +
             '</span></div>';
 
-        html += '<div class="comment">' + element.description;
-        $.each(element.friends, function(key, value) {
-            html += '<br/>with <span class="name">' + value.firstname + '</span>';
-        });
+        html += '<div class="comment">Gr8Conf US in Minneapolis';
+        html += '<br/>with <span class="name">Fabrice</span>';
         html += '</div>';
 
         html += '<img class="mainimage" src="http://placehold.it/640x480/88e" />';
