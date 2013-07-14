@@ -81,12 +81,9 @@ threecircles.view.checkinview = function (model, elements) {
             showGeneralMessage(data, event);
         } else {
             resetForm('form-update-checkin');
-
+            addAndSort(model.getItems(), data.item);
             if (!data.item.NOTIFIED) {
-                addAndSort(model.getItems(), data.item);
                 $.mobile.changePage($('#section-list-checkin'));
-            } else {
-                addAndSort(model.getItems(), data.item);
             }
 		}
     });
