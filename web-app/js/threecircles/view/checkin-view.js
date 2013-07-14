@@ -15,13 +15,7 @@ threecircles.view.checkinview = function (model, elements) {
         $('#list-checkin').empty();
         var key, items = model.getItems();
         $.each(items, function(key, value) {
-            //-----------------------------------------------------------------------------
-            //  TODO render timeline
-            //-----------------------------------------------------------------------------
             $('#list-checkin-parent').append(createListItemCustom(value)).trigger("create");
-            //-----------------------------------------------------------------------------
-            //  end of TODO render timeline
-            //-----------------------------------------------------------------------------
         });
         $('#list-checkin').listview('refresh');
     });
