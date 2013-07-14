@@ -93,12 +93,28 @@ threecircles.view.geolocation = function () {
             html.append(span);
 
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 3:
+            //  Add an input of type 'file' with id 'input-checkin-photo'.
+            //  Just uncomment line
             //-----------------------------------------------------------------------------
-            // <span id="div-for-upload"><input type="file" class="upload ui-input-text" accept=......
-            //
+            span = $('<span>');
+            span.attr({
+                id: "div-for-upload",
+                style:"display: table-cell;width: 30%;"
+            });
+//            var input = $('<input>');
+//            input.attr({
+//                type: "file",
+//                accept:"image/*",
+//                "data-role": "none",
+//                class: "upload ui-input-text",
+//                name: "photo",
+//                id: "input-checkin-photo"
+//            });
+            span.append(input);
+            html.append(span);
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 3: picture
             //-----------------------------------------------------------------------------
         } else {
             html = $('#div-bubble');
@@ -114,10 +130,13 @@ threecircles.view.geolocation = function () {
 
         if(init) {
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 4: picture
+            //  Use 3musketeers plugin camera service in grails.mobile.camera
+            //  to take the picture and display picture in input id input-checkin-photo
+            //  (defined above)
             //-----------------------------------------------------------------------------
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 4: picture
             //-----------------------------------------------------------------------------
         }
     };

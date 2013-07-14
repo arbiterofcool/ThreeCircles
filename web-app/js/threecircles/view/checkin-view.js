@@ -55,10 +55,12 @@ threecircles.view.checkinview = function (model, elements) {
         });
         html += '</div>';
         //-----------------------------------------------------------------------------
-        //  TODO picture
+        //  TODO 6: Display picture on timeline
+        //  Uncomment lines
         //-----------------------------------------------------------------------------
         if(element.photo) {
-
+//            var base64 = grails.mobile.camera.encode(element.photo);
+//            html += '<img class="mainimage" src="' + base64 + '"/>';
         }
         html +='<span class="date">' + timelineDate + '</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
             '</div>';
@@ -80,12 +82,9 @@ threecircles.view.checkinview = function (model, elements) {
             showGeneralMessage(data, event);
         } else {
             resetForm('form-update-checkin');
-
+            addAndSort(model.getItems(), data.item);
             if (!data.item.NOTIFIED) {
-                addAndSort(model.getItems(), data.item);
                 $.mobile.changePage($('#section-list-checkin'));
-            } else {
-                addAndSort(model.getItems(), data.item);
             }
 		}
     });
@@ -209,17 +208,23 @@ threecircles.view.checkinview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
-            //$(this).addClass('ui-disabled');
             var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
             var description = $('#textarea-1').val();
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 5: Retrieve photo from input
+            //  Uncomment
             //-----------------------------------------------------------------------------
+//            var photo = $('#input-checkin-photo');
+//            var photoValue = "";
+//            if (photo.attr('data-value')) {
+//                photoValue = photo.attr('data-value');
+//            }
             var obj = {
                 description: description,
                 'owner.id': "1",
                 place: placeObj,
                 when: new Date().getTime()
+//                ,photo: photoValue
             };
             var newElement = {
                 checkin: JSON.stringify(obj)
