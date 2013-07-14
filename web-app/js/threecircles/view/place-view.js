@@ -4,8 +4,13 @@ threecircles.view = threecircles.view || {};
 threecircles.view.placeview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
     var mapServiceList = grails.mobile.map.googleMapService();
     var mapServiceForm = grails.mobile.map.googleMapService();
+
 
     // Register events
     that.model.listedItems.attach(function (data) {
@@ -16,6 +21,7 @@ threecircles.view.placeview = function (model, elements) {
             renderElement(value);
         });
         $('#list-place').listview('refresh');
+
         mapServiceList.refreshCenterZoomMap();
     });
 
@@ -34,7 +40,7 @@ threecircles.view.placeview = function (model, elements) {
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-place'));
             }
-		}
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -151,14 +157,18 @@ threecircles.view.placeview = function (model, elements) {
 
     var showElement = function (id) {
         resetForm('form-update-place');
+        showDependentElement(id);
         var element = that.model.items[id];
         $.each(element, function (name, value) {
             var input = $('#input-place-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -172,6 +182,10 @@ threecircles.view.placeview = function (model, elements) {
         $('#delete-place').show();
         $.mobile.changePage($('#section-show-place'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {
@@ -198,7 +212,7 @@ threecircles.view.placeview = function (model, elements) {
             });
         }
     };
-    
+
     var hideListDisplay = function () {
         $('#list-place-parent').css('display', 'none');
     };
@@ -215,7 +229,7 @@ threecircles.view.placeview = function (model, elements) {
     var hideMapDisplay = function () {
         $('#map-place-parent').css('display', 'none');
     };
-    
+
     var createListItem = function (element) {
         var li, a = $('<a>');
         a.attr({
@@ -227,7 +241,7 @@ threecircles.view.placeview = function (model, elements) {
         a.on('vclick', function(event) {
             show(element.id, event);
         });
-        
+
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);
