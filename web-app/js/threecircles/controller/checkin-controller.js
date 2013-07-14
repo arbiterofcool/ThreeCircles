@@ -19,7 +19,7 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
         $.ajax({
             cache: false,
             type: "POST",
-            async: false,
+            async: true,
             data: item,
             dataType: "json",
             url: url,
