@@ -80,7 +80,7 @@ threecircles.view.checkinview = function (model, elements) {
             addAndSort(model.getItems(), data.item);
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
-            } 
+            }
         }
     });
 
@@ -281,9 +281,6 @@ threecircles.view.checkinview = function (model, elements) {
         });
     };
 
-    //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
-    //-----------------------------------------------------------------------------
     var resetForm = function (form) {
         $('#textarea-1').val('');
         $('input[data-type="date"]').each(function() {
