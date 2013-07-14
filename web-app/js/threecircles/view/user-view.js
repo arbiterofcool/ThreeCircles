@@ -25,6 +25,61 @@ threecircles.view.userview = function (model, elements) {
         that.listButtonClicked.notify();
     });
 
+    var show = function(dataId, event) {
+        event.stopPropagation();
+        $('#form-update-user').validationEngine('hide');
+        $('#form-update-user').validationEngine({promptPosition: 'bottomLeft'});
+        showElement(dataId);
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
+    };
+
+    var createElement = function () {
+        resetForm('form-update-user');
+        $.mobile.changePage($('#section-show-user'));
+        $('#delete-user').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
+    };
+
+    var showElement = function (id) {
+        resetForm('form-update-user');
+        showDependentElement(id);
+        var element = that.model.items[id];
+        $.each(element, function (name, value) {
+            var input = $('#input-user-' + name);
+            if (input.attr('type') != 'file') {
+                input.val(value);
+            } else {
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
+            }
+            if (input.attr('data-type') == 'date') {
+                input.scroller('setDate', (value === '') ? '' : new Date(value), true);
+            }
+        });
+        $('#delete-user').show();
+        $.mobile.changePage($('#section-show-user'));
+    };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+        var friendsSelected = element.friends;
+        $.each(friendsSelected, function (key, value) {
+            var selector;
+            if (value === Object(value)) {
+                selector= '#checkbox-friends-' + value.id;
+            } else {
+                selector= '#checkbox-friends-' + value;
+            }
+            $(selector).attr('checked','checked').checkboxradio('refresh');
+        });
+    };
+
     var createListItem = function (element) {
         var li, a = $('<a>');
         var img = $('<img>');
