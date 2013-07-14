@@ -64,7 +64,7 @@ threecircles.view.checkinview = function (model, elements) {
         return html;
     };
     //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
+    //  TODO 3: on checkin callback
     //-----------------------------------------------------------------------------
     that.model.createdItem.attach(function (data, event) {
         $(that.elements.save).removeClass('ui-disabled');
@@ -77,13 +77,10 @@ threecircles.view.checkinview = function (model, elements) {
             showGeneralMessage(data, event);
         } else {
             resetForm('form-update-checkin');
-
+            addAndSort(model.getItems(), data.item);
             if (!data.item.NOTIFIED) {
-                addAndSort(model.getItems(), data.item);
                 $.mobile.changePage($('#section-list-checkin'));
-            } else {
-                addAndSort(model.getItems(), data.item);
-            }
+            } 
         }
     });
 
@@ -198,13 +195,12 @@ threecircles.view.checkinview = function (model, elements) {
     });
 
     //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
+    //  TODO 1: on checkin submit
     //-----------------------------------------------------------------------------
     $('#checkin-submit').on( 'vclick', function (event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
-            //$(this).addClass('ui-disabled');
             var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
             var description = $('#textarea-1').val();
             var obj = {
