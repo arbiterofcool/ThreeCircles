@@ -39,21 +39,27 @@ git push                 // to send your committed changes to the remote repo if
 
 ## Step1: Scaffolding
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step1_todo
 ```
-In this branch there is only one Grails command that has been executed
+### 2. We've DONE it for you
+#### 2.1 Create app
+In this branch, we have created a Grails app ThreeCircles with this command
 ```java
 grails create-app ThreeCircles
 ```
+
+#### 2.2 Configure app
 Now let's start looking at the configuration added
-### BuildConfig.groovy
+
+In BuildConfig.groovy
 ```java
   grails.plugin.location."html5-mobile-scaffolding" = "../html5-mobile-scaffolding"
-  grails.plugin.location."phonegapbuild" = "../phonegapbuild"
 ```
-in plugins
+to get the latest from source code.
+
+in plugins section
 ```java
     plugins {
         runtime ":hibernate:$grailsVersion"
@@ -70,19 +76,23 @@ in resolution **legacyResolve** has been changed
     ...
     }
 ```
+to fetch Platform Core plugins.
+
 in UrlMappings.groovy
 line removed
 ```java
     "/"(view:"/index")
 ```
 
-### The domain classes have been already added
-Now, look at the class diagram
+#### 2.3 Comain classes
+We've added the following domain classes. Look at the class diagram
 ![class diagram](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/classDiagram.png "class diagram")
 
-### Generate HTML5 scaffolding for both controller and views
+### 3. Your TODO
+This is where you start doing some work!
 
-This is where you start doing some work
+#### 3.1 Generate HTML5 scaffolding
+for both controller and views using 3musketeers plugin script
 
 ```java
 grails html-generate-all threecircles.User
@@ -90,18 +100,18 @@ grails html-generate-all threecircles.Place
 grails html-generate-all threecircles.Comment
 grails html-generate-all threecircles.Checkin
 ```
-### Run the app
+#### 3.2 Run the app
 ```java
 grails run-app
 ```
 
-### Go to URL
+#### 3.3 Go to URL
 ```java
 http://localhost:8080/ThreeCircles/index.html?_debugResources=y
 ```
 Note: adding _debugResources=y to reload JavaScript/CSS/HTML updates for resources plugins
 
-### Get source code from repo
+### 4. Get source code from repo
 Before you get the solution push your changes
 ```java
 git status                   // to check the list of files changed or added
@@ -114,22 +124,26 @@ and if you want to check the solution
 git checkout step1_done
 ```
 ## Step2: Boostrap
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step2_todo
 ```
-and search for TODO in grails-app/conf/Bootstrap.groovy
 
-### In BootStrap.groovy
+### 2. We've DONE it for you
+Search for TODO in grails-app/conf/Bootstrap.groovy
+
+### 3. Your TODO 
+
+In BootStrap.groovy
 - add several users
-- add some places
+- add some places with coordinate. Choose your favorite places like:
 
 ```java
-        Place wien = new Place(name: "Wein", 
-                               latitude:48.217349004974416, 
-                               longitude: 16.407538767645292, 
+        Place minneapolis = new Place(name: "Minneapolis", 
+                               latitude:48.83, 
+                               longitude: 93.47, 
                                address:  "Messe Wien Exhibition & Congress " )
-        wien.save()
+        minneapolis.save()
 ```
 - add a checkin at confess!
 
