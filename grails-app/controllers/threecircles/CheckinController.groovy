@@ -4,8 +4,12 @@ import grails.converters.deep.JSON
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
+import org.springframework.security.access.annotation.Secured
 
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class CheckinController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -13,7 +17,7 @@ class CheckinController {
         redirect(action: "list", params: params)
     }
 
-    def login() {
+    def list() {
         //-----------------------------------------------------------------------------
         // TODO retrieve user with username and password from param
         //-----------------------------------------------------------------------------
@@ -21,40 +25,28 @@ class CheckinController {
         //-----------------------------------------------------------------------------
         // else send an error message wrong password
         //-----------------------------------------------------------------------------
-        def receivedUsername = params.j_username
-        def receivedPassword = params.j_password
-
-        def me = User.findByUsername(receivedUsername)
-        if (me && receivedPassword == me.password) {
-            def listOfCheckins = Checkin.findAllByOwner(me)
-            me.friends.each {
-                def result = Checkin.findAllByOwner(it)
-                if (result.size() > 0) {
-                    result.each { itt ->
-                        listOfCheckins << itt
-                    }
+        User me = User.get(springSecurityService.principal.id)
+        def listOfCheckins = Checkin.findAllByOwner(me)
+        me.friends.each {
+            def result = Checkin.findAllByOwner(it)
+            if (result.size() > 0) {
+                result.each { itt ->
+                    listOfCheckins << itt
                 }
             }
-            def builder = new groovy.json.JsonBuilder()
-            def checkinsJSON = listOfCheckins as JSON
-            def checkinString = checkinsJSON.toString()
-            def info = builder {
-                firstname me.firstname
-                checkins checkinString
-            }
-            String builderString = builder.toString();
-            render builderString
-        } else {
-            render "Error wrong username or password"
         }
+        def builder = new groovy.json.JsonBuilder()
+        def checkinsJSON = listOfCheckins as JSON
+        def checkinString =  checkinsJSON.toString()
+        def info = builder  {
+            firstname me.firstname
+            checkins checkinString
+        }
+        String builderString = builder.toString();
+        render builderString
         //-----------------------------------------------------------------------------
         // end of TODO retrieve user with username and password from param
         //-----------------------------------------------------------------------------
-    }
-
-    def list() {
-      params.max = Math.min(params.max ? params.int('max') : 10, 100)
-      render Checkin.list(params) as JSON
     }
 
     def save() {

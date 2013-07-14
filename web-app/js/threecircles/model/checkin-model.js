@@ -7,9 +7,17 @@ threecircles.model.checkinmodel = function() {
     // TODO register logged event
     //-----------------------------------------------------------------------------
     that.logged = grails.mobile.event(that);
+    that.loggedOut = grails.mobile.event(that);
     //-----------------------------------------------------------------------------
     // end of TODO register logged event
     //-----------------------------------------------------------------------------
+
+    that.listItems = function (items, notifyView) {
+        processList(items);
+        if (notifyView) {
+            that.listedItems.notify({'items': that.items});
+        }
+    };
 
     //-----------------------------------------------------------------------------
     // TODO login method on model to save firstname and list of checkins and notify view
@@ -21,6 +29,13 @@ threecircles.model.checkinmodel = function() {
         that.logged.notify({items: item}, context);
         return true;
     };
+
+    that.logout = function (item, context) {
+        that.username = null;
+        that.loggedOut.notify({items: item}, context);
+        return true;
+    };
+
 
     var processList = function(item) {
         if (item.errors || item.message) {
