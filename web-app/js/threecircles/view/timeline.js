@@ -45,7 +45,7 @@ threecircles.view.timeline = function () {
             }
         }
         return "over a year ago";
-    }
+    };
 
     var integerDivision = function (numerator, denominator) {
         var remainder = numerator % denominator;
