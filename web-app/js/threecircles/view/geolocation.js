@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.geolocation = function () {
+threecircles.view.geolocation = function () {
     var that = {};
     that.map = null;
 
@@ -98,7 +98,17 @@ threecirclesconfess.view.geolocation = function () {
 
     that.showMapWithPlaces = function(canvas, pois, myFunction) {
         //-----------------------------------------------------------------------------
-        //  TODO search places nearby with google places
+        //  TODO search places nearby with google places. The goal of this step is
+        //  to make you discover useful Google services when doing feolocation stuff.
+        //  TODO 1: initialise google places service
+        //  See API documentation
+        //  https://developers.google.com/maps/documentation/javascript/reference#PlacesService
+        //  TODO 2: In PlacesService find the places close by with all details
+        //  TODO 3: In search callback method, calculate the distance between you current
+        //  location and the point of interest
+        //  https://developers.google.com/maps/documentation/javascript/reference#spherical
+        //  TODO 4: Create a marker and add it to the map
+        //  https://developers.google.com/maps/documentation/javascript/reference#Marker
         //-----------------------------------------------------------------------------
         if (!that.map) {
             that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);
@@ -115,10 +125,10 @@ threecirclesconfess.view.geolocation = function () {
                 };
 
                 removeMarkers();
-
-                var service = ?????? // TODO: Please initiate service with Place Service ;
-                // TODO: Use service to find places close by
-                service.??????(request, function (results, status) {
+                // TODO 1: Please initiate service with Place Service ;
+                var service = {};
+                // TODO 2: Use service to find places close by
+                service.nameOfMethodToReplace(request, function (results, status) {
                     if (status != google.maps.places.PlacesServiceStatus.OK) {
                         alert(status);
                         return;
@@ -128,8 +138,8 @@ threecirclesconfess.view.geolocation = function () {
                         var img = result.icon;
                         var name = result.name;
 
-                        // TODO: Calculate the distance between you current location and the point of interest
-                        var distance = ??????????;
+                        // TODO 3: Calculate the distance between you current location and the point of interest
+                        var distance = {};
 
                         var lat = result.geometry.location.lat();
                         var lng = result.geometry.location.lng();
@@ -152,8 +162,8 @@ threecirclesconfess.view.geolocation = function () {
                         $("#" + pois).append(li);
 
 
-                        // TODO: Create a marker and add it to the map
-                        var marker = ?????????;
+                        // TODO 4: Create a marker and add it to the map
+                        var marker = {};
 
                         markers.push(marker);
                     }
