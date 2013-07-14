@@ -134,68 +134,68 @@ Search for TODO in grails-app/conf/Bootstrap.groovy
 
 ### 3. Your TODO 
 
-In BootStrap.groovy
+#### 3.1 In BootStrap.groovy
 - add several users
 - add some places with coordinate. Choose your favorite places like:
 
 ```java
-        Place minneapolis = new Place(name: "Minneapolis", 
-                               latitude:48.83, 
-                               longitude: 93.47, 
-                               address:  "Messe Wien Exhibition & Congress " )
+        Place minneapolis = new Place(name: "Minneapolis Convention Center",
+                latitude: 44.96930003941189,
+                longitude: -93.27280524253842,
+                address:  "1301 2nd avenue S, MN55403" )
         minneapolis.save()
 ```
-- add a checkin at confess!
+- add a checkin at Gr8Conf!
 
-### Run the app
+#### 3.2 Run the app
 ```java
 grails run-app
 ```
 - Test the application
-- Play with offline mode (in chrome switch off network, in Firefox File-> Work Offline)
+- Try with offline mode (in chrome switch off network, in Firefox File-> Work Offline)
 - Add/Delete Users for example
 - Get back online
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step2_done
 ```
 
 ## Step3: Render timeline with mock picture
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step3_todo
 ```
-you will get new folders and files containing mock screen for timeline
-- web-app/css/my.css
-- web-app/img/
--  web-app/index_mock.html
--	web-app/js/my.js
+### 2. We've DONE it for you
 
+you will get new folders and files containing mock screen for timeline
+- added new cool CSS in web-app/css/my.css
+- and images in web-app/img/
+- delete index.html, this default page listing all controller available in Grails. 
+- rename checkin-index.html into index.html. Checkin will become our main view with a timeline of all checkins
+- in index.html, section with id **section-list-checkin** revisit footer 
+
+### 3. Your TODO 
 Search for TODO in the project
 
-### Main page: timeline
-- delete index.html
-- rename checkin-index.html into index.html
+#### 3.1 Transform your index.html with css
+- in index.html (search "TODO header"), in section with id **section-list-checkin** add cool header using jQuery Mobile
 
-### Transform your index.html with css
-- add import css file 
-- in section with id **section-list-checkin** add header as shown in **index-mockup.html**
-- in section with id **section-list-checkin** revisit footer as shown in **index-mockup.html**
-- in section with id **myContent**, add canvas map (for later use step5)
-
-### Display dynamic content
+#### 3.2 Display dynamic content
 The js file **web-app/js/threecircles/checkin-view.js** contains the JavaScript associated with your view. 
 Let's make the content dynamic!
-- Go to the callback associated to that.model.listedItems event:
-Put a breakpoint in checkin-view.js to see the data structure returned by the server
-- is it rendering as expected? hummm.... It would be easier with embedded relationship. 
+In index.html (search "TODO render timeline"):
+
+1. remove hard coded string'Gr8Conf US in Minneapolis' by dynamic value coming from element
+To help you know what JSON is returned by Controller server side, put a break point in your browser in this method and inspect element.
+2. remove hard coded value for 'Corinne Krych' by value coming from element.
+Notice we have only reference by id, It would be easier with embedded relationship.
 In CheckinController.groovy add deep relationship resolution for **as JSON** (search for //TODO deep relation)
-- working with **index-mockup.html**, loop for all checkins: display dynamic content for owner, 
+3. loop for all checkins: display dynamic content for owner, 
 where the checkin is, checkin description. Leave harcoded place holder for pictures.
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step3_done
 ```
