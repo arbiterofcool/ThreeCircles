@@ -6,9 +6,7 @@ import threecircles.Checkin
 class BootStrap {
 
     def init = { servletContext ->
-        //-----------------------------------------------------------------------------
-        // TODO Register yourself and your friends!!
-        //-----------------------------------------------------------------------------
+
         def testUser = new User(firstname: "Corinne", lastname: "Krych", username: 'me', enabled: true, password: 'password')
         testUser.save()
 
@@ -24,44 +22,44 @@ class BootStrap {
         Place nice = new Place(name: "Nice", latitude:43.7, longitude: 7.2, address: "town center" )
         nice.save()
 
-        Place madrid = new Place(name: "Nice", latitude:40.41973002585687, longitude: -3.7075513757179124, address: "Calle Preciados 37" )
+        Place madrid = new Place(name: "Madrid", latitude:40.41973002585687, longitude: -3.7075513757179124, address: "Calle Preciados 37" )
         madrid.save()
 
-        Place paris = new Place(name: "Paris", latitude:48.8, longitude: 2.3, address:  "13 rue richard lenoir" )
-        paris.save()
+        Place copenhagen = new Place(name: "Copenhagen", latitude:55.659163935401104, longitude: 12.591153192520096, address:  "Rued Langgaards Vej 7, DK-2300 Copenhagen S" )
+        copenhagen.save()
 
-        Place wien = new Place(name: "Wein", latitude:48.217349004974416, longitude: 16.407538767645292, address:  "Messe Wien Exhibition & Congress " )
-        wien.save()
+        Place minneapolis = new Place(name: "Minneapolis Convention Center",
+                latitude: 44.96930003941189,
+                longitude: -93.27280524253842,
+                address:  "1301 2nd avenue S, MN55403" )
+        minneapolis.save()
 
 
         testUser.addToFriends(fabrice)
         testUser.addToFriends(sebastien)
         testUser.save()
 
-        Comment comment = new Comment(text: """brrrrrr""", user: testUser)
-        comment.save()
-        Comment comment2 = new Comment(text: """great conference.
-            Cool to meet female speaker""", user: testUser)
+        Comment  comment1 = new Comment(text: """Great organization, thanks Soren""", user: testUser)
+        comment1.save()
+        Comment comment2 = new Comment(text: """Great conference, thanks Shaun. Cool to learn mobile stuff.""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date().time, place: wien, owner: testUser, photo:  "")
-        confess.save()
-        confess.addToFriends(fabrice)
-        confess.save()
+        Checkin gr8confus = new Checkin(description: "Gr8Conf US", when: new Date().time, place: minneapolis, owner: testUser, photo: "")
+        gr8confus.save()
+        gr8confus.addToFriends(fabrice)
+        gr8confus.addToComments(comment2)
+        gr8confus.save()
 
-        Checkin devfestw = new Checkin(description: "devfestw", when: (new Date() - 25).time, place: paris, owner: fabrice, photo:  "")
-        devfestw.save()
-        devfestw.addToFriends(fabrice)
-        devfestw.addToComments(comment)
-        devfestw.addToComments(comment2)
+        Checkin gr8confeu = new Checkin(description: "Gr8Conf EU", when: (new Date() - 25).time, place: copenhagen, owner: testUser, photo:  "")
+        gr8confeu.save()
+        gr8confeu.addToFriends(fabrice)
+        gr8confeu.addToComments(comment1)
 
-        devfestw.save()
+        gr8confeu.save()
 
-        Checkin greach = new Checkin(description: "greach", when: (new Date() - 69).time, place: madrid, owner: mathieu, photo:  "")
+        Checkin greach = new Checkin(description: "greach", when: (new Date() - 69).time, place: madrid, owner: testUser, photo:  "")
         greach.save()
         greach.addToFriends(fabrice)
-        greach.addToComments(comment)
-        greach.addToComments(comment2)
 
         greach.save()
 
