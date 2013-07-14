@@ -189,11 +189,9 @@ In index.html (search "TODO render timeline"):
 
 1. remove hard coded string'Gr8Conf US in Minneapolis' by dynamic value coming from element
 To help you know what JSON is returned by Controller server side, put a break point in your browser in this method and inspect element.
-2. remove hard coded value for 'Corinne Krych' by value coming from element.
-Notice we have only reference by id, It would be easier with embedded relationship.
-In CheckinController.groovy add deep relationship resolution for **as JSON** (search for //TODO deep relation)
-3. loop for all checkins: display dynamic content for owner, 
-where the checkin is, checkin description. Leave harcoded place holder for pictures.
+2. remove hard coded value for 'Corinne Krych' by value coming from element etc...
+3. loop for all checkins
+Leave harcoded place holder for pictures.
 
 ### 4. Get source code from repo
 ```java
