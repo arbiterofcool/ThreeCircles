@@ -316,11 +316,12 @@ Event push (Grails plugin using Atmosphere framework) is doing broadcast to all 
 In order to know in your code if you're the one triggering 
 created callback you can user the NOTIFIED tag. NOTIFIED boolean is set true when you are notidied of somebody else event.
 In **that.model.createdItem** callback change page only when needed.
-```
+
 ### 4. Get source code from repo
 ```java
 git checkout step6_done
 ```
+
 ## Step7: Let's take a picture
 
 ### 1. Get source code from repo
@@ -330,19 +331,25 @@ git checkout step7_todo
 ### 2. We've DONE it for you
 
 ### 3. Your TODO
-#### 3.1 Add a new attribute in Checkin.groovy search for // TODO picture
-- By convention every attribute of type **byte[]** is considerered as a photo. 
+#### 3.1 TODO 1: Add a new attribute in domain class
+In Checkin.groovy, by convention every attribute of type **byte[]** is considerered as a photo. 
 No need to re-generate scaffolded view: be carefull not to loose all your work on checkin view!
-- Photo should be optional. See how to add to define 
+
+#### 3.2 TODO 2: Photo should be optional. 
+See how to add to define 
 [constraints](http://grails.org/doc/latest/ref/Constraints/Usage.html) in Grails.
-- Photo should have size of 20Mb
+Photo should have size of 20Mb
 
-#### 3.2 in geolocation.js, 
-- in the bubble window, add an input of type **file** with id **input-checkin-photo**
+#### 3.3 TODO 3: 
+In geolocation.js, in the bubble window, add an input of type **file** with id **input-checkin-photo**
+#### 3.4 TODO 4:
+In geolocation.js, use 3musketeers plugin camera service in grails.mobile.camera to take the picture and display
 
-#### 3.3 in checkin-view.js,
-- on **checkin-submit** click send picture within the form
-- modify **createListItemCustom** to display picture if present
+#### 3.5 TODO 5: Retrieve photo from input
+In checkin-view.js, on **checkin-submit** uncomment line.
+
+#### 3.6 TODO 6: Display picture on timeline
+In checkin-view.js, modify **createListItemCustom** to display picture if present
 
 ### 4. Get source code from repo
 ```java
@@ -375,6 +382,7 @@ Nothing! just test it to see where we are...
 ```java
 git checkout step9_todo
 ```
+
 ### 2. We've DONE it for you
 You will get:
 - in **index.html** a new section with id **login-page** has been added for the login form.
