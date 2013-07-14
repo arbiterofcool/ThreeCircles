@@ -5,6 +5,11 @@ threecircles.view.userview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
 
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-user').empty();
@@ -13,6 +18,7 @@ threecircles.view.userview = function (model, elements) {
             renderElement(value);
         });
         $('#list-user').listview('refresh');
+
     });
 
     that.model.createdItem.attach(function (data, event) {
@@ -30,7 +36,7 @@ threecircles.view.userview = function (model, elements) {
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-user'));
             }
-		}
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -108,44 +114,42 @@ threecircles.view.userview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-user').validationEngine('hide');
         $('#form-update-user').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         createElement();
+        that.editButtonClicked.notify();
     });
 
     var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-user').validationEngine('hide');
         $('#form-update-user').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         showElement(dataId);
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
     };
 
     var createElement = function () {
         resetForm('form-update-user');
         $.mobile.changePage($('#section-show-user'));
         $('#delete-user').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
     };
 
     var showElement = function (id) {
         resetForm('form-update-user');
+        showDependentElement(id);
         var element = that.model.items[id];
-        var friendsSelected = element.friends;
-        $.each(friendsSelected, function (key, value) {
-            var selector;
-            if (value === Object(value)) {
-              selector= '#checkbox-friends-' + value.id;
-            } else {
-              selector= '#checkbox-friends-' + value;
-            }
-            $(selector).attr('checked','checked').checkboxradio('refresh');
-        });
         $.each(element, function (name, value) {
             var input = $('#input-user-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -154,6 +158,20 @@ threecircles.view.userview = function (model, elements) {
         $('#delete-user').show();
         $.mobile.changePage($('#section-show-user'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+        var friendsSelected = element.friends;
+        $.each(friendsSelected, function (key, value) {
+            var selector;
+            if (value === Object(value)) {
+                selector= '#checkbox-friends-' + value.id;
+            } else {
+                selector= '#checkbox-friends-' + value;
+            }
+            $(selector).attr('checked','checked').checkboxradio('refresh');
+        });
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {
@@ -196,6 +214,7 @@ threecircles.view.userview = function (model, elements) {
             });
             select.val(options[0]);
         }
+        select.selectmenu("refresh");
     };
 
     var renderDependentList = function (dependentName, items) {

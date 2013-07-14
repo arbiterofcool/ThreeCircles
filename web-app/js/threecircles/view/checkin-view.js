@@ -5,6 +5,11 @@ threecircles.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
 
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-checkin').empty();
@@ -46,7 +51,7 @@ threecircles.view.checkinview = function (model, elements) {
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
             }
-		}
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -124,72 +129,42 @@ threecircles.view.checkinview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         createElement();
+        that.editButtonClicked.notify();
     });
 
     var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         showElement(dataId);
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
     };
 
     var createElement = function () {
         resetForm('form-update-checkin');
         $.mobile.changePage($('#section-show-checkin'));
         $('#delete-checkin').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
     };
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
+        showDependentElement(id);
         var element = that.model.items[id];
-        var value = element['owner.id'];
-        if (!value) {
-            value = element['owner'];
-        }
-        if (!value || (value === Object(value))) {
-           value = element.owner.id;
-        }
-        $('select[data-gorm-relation="many-to-one"][name="owner"]').val(value).trigger("change");
-        
-        var value = element['place.id'];
-        if (!value) {
-            value = element['place'];
-        }
-        if (!value || (value === Object(value))) {
-           value = element.place.id;
-        }
-        $('select[data-gorm-relation="many-to-one"][name="place"]').val(value).trigger("change");
-        
-        var commentsSelected = element.comments;
-        $.each(commentsSelected, function (key, value) {
-            var selector;
-            if (value === Object(value)) {
-              selector= '#checkbox-comments-' + value.id;
-            } else {
-              selector= '#checkbox-comments-' + value;
-            }
-            $(selector).attr('checked','checked').checkboxradio('refresh');
-        });
-        var friendsSelected = element.friends;
-        $.each(friendsSelected, function (key, value) {
-            var selector;
-            if (value === Object(value)) {
-              selector= '#checkbox-friends-' + value.id;
-            } else {
-              selector= '#checkbox-friends-' + value;
-            }
-            $(selector).attr('checked','checked').checkboxradio('refresh');
-        });
         $.each(element, function (name, value) {
             var input = $('#input-checkin-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -197,6 +172,48 @@ threecircles.view.checkinview = function (model, elements) {
         });
         $('#delete-checkin').show();
         $.mobile.changePage($('#section-show-checkin'));
+    };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+        var value = element['owner.id'];
+        if (!value) {
+            value = element['owner'];
+        }
+        if (!value || (value === Object(value))) {
+            value = element.owner.id;
+        }
+        $('select[data-gorm-relation="many-to-one"][name="owner"]').val(value).trigger("change");
+
+        var value = element['place.id'];
+        if (!value) {
+            value = element['place'];
+        }
+        if (!value || (value === Object(value))) {
+            value = element.place.id;
+        }
+        $('select[data-gorm-relation="many-to-one"][name="place"]').val(value).trigger("change");
+
+        var commentsSelected = element.comments;
+        $.each(commentsSelected, function (key, value) {
+            var selector;
+            if (value === Object(value)) {
+                selector= '#checkbox-comments-' + value.id;
+            } else {
+                selector= '#checkbox-comments-' + value;
+            }
+            $(selector).attr('checked','checked').checkboxradio('refresh');
+        });
+        var friendsSelected = element.friends;
+        $.each(friendsSelected, function (key, value) {
+            var selector;
+            if (value === Object(value)) {
+                selector= '#checkbox-friends-' + value.id;
+            } else {
+                selector= '#checkbox-friends-' + value;
+            }
+            $(selector).attr('checked','checked').checkboxradio('refresh');
+        });
     };
 
     var resetForm = function (form) {
@@ -240,6 +257,7 @@ threecircles.view.checkinview = function (model, elements) {
             });
             select.val(options[0]);
         }
+        select.selectmenu("refresh");
     };
 
     var renderDependentList = function (dependentName, items) {
