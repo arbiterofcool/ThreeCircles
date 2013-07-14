@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.geolocation = function () {
+threecircles.view.geolocation = function () {
     var that = {};
     that.map = null;
 
