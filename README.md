@@ -3,7 +3,7 @@ ThreeCircles: step by step tutorial
 This github repository holds all the step by step tutorial to illustrate how to use 
 [3musket33rs](http://3musket33rs.github.com/) html5-mobile-scaffolding Grails plugin. 
 
-Do you want to see step by step how to build a single page web app? This workshop was presented at [ConFESS](https://2013.con-fess.com/)
+Do you want to see step by step how to build a single page web app? This workshop was presented at [ConFESS](https://2013.con-fess.com/) and [Gr8Conf US] (http://gr8conf.us/Presentations/Mobile-App-in-minutes--not-day)
 with the following abstract:
 
 ***Hybrid Mobile App in minutes not days***
@@ -20,10 +20,9 @@ You will find associated presentation at [http://corinnekrych.github.com/confess
 Fork or clone this repo but also the 3musket33rs plugins
 ```java
 git clone https://github.com/3musket33rs/html5-mobile-scaffolding
-git clone https://github.com/3musket33rs/phonegapbuild.git
 git clone https://github.com/fabricematrat/ThreeCircles.git
 ```
-You will need also grails 2.2.1, jdk1.7, a modern browser (no IE6!)
+You will need also grails 2.2.3, jdk1.7, a modern browser (no IE6!)
 
 ### Working with branches
 The step by step tutorial works with git branches. For each step you will find a branch **stepXX_todo** and **stepXX_done**
@@ -48,9 +47,8 @@ In this branch there is only one Grails command that has been executed
 ```java
 grails create-app ThreeCircles
 ```
-Now let's start configuring, adding the required plugins.
+Now let's start looking at the configuration added
 ### BuildConfig.groovy
-add
 ```java
   grails.plugin.location."html5-mobile-scaffolding" = "../html5-mobile-scaffolding"
   grails.plugin.location."phonegapbuild" = "../phonegapbuild"
@@ -60,14 +58,11 @@ in plugins
     plugins {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.9.1"
-        runtime ":resources:1.1.6"
         build ":tomcat:$grailsVersion"
-        runtime ":database-migration:1.1"
-        compile ":cache:1.0.0"
         compile ":webxml:1.4.1"
     }
 ```
-in resolution change **legacyResolve**
+in resolution **legacyResolve** has been changed
 ```java
     grails.project.dependency.resolution = {    
     ....
@@ -76,23 +71,19 @@ in resolution change **legacyResolve**
     }
 ```
 in UrlMappings.groovy
-remove
+line removed
 ```java
     "/"(view:"/index")
 ```
 
-### Create domain classes
-Ready to do scaffold all the domain classes we need!
-```java
-grails create-domain-class User
-grails create-domain-class Place
-grails create-domain-class Comment
-grails create-domain-class Checkin
-```
-Now, edit generated domain classes and add content according to class diagram
+### The domain classes have been already added
+Now, look at the class diagram
 ![class diagram](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/classDiagram.png "class diagram")
 
 ### Generate HTML5 scaffolding for both controller and views
+
+This is where you start doing some work
+
 ```java
 grails html-generate-all threecircles.User
 grails html-generate-all threecircles.Place
@@ -165,7 +156,7 @@ git checkout step3_todo
 you will get new folders and files containing mock screen for timeline
 - web-app/css/my.css
 - web-app/img/
--	web-app/index_mock.html
+-  web-app/index_mock.html
 -	web-app/js/my.js
 
 Search for TODO in the project
