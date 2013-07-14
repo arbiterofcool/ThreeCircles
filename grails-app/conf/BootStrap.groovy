@@ -2,6 +2,7 @@ import threecircles.User
 import threecircles.Place
 import threecircles.Comment
 import threecircles.Checkin
+import com.sun.xml.internal.rngom.ast.util.CheckingSchemaBuilder
 
 class BootStrap {
 
@@ -15,10 +16,13 @@ class BootStrap {
         // myUser.save()
         //
         // TODO the same for Place, Comment, Checkin
-        // For Minneapolis latitude:48.83, longitude: 93.47
+        // For Minneapolis
+        // latitude: 44.96930003941189,
+        // longitude: -93.27280524253842
         //
         // Do not forget to add a checkin for this conference
         //-----------------------------------------------------------------------------
+
     }
     def destroy = {
     }

@@ -6,7 +6,6 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.plugin.location."html5-mobile-scaffolding" = "../html5-mobile-scaffolding"
-grails.plugin.location."phonegapbuild" = "../phonegapbuild"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -42,12 +41,7 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.9.1"
-        runtime ":resources:1.1.6"
         build ":tomcat:$grailsVersion"
-        runtime ":database-migration:1.1"
-        compile ':cache:1.0.0'
-        // http://support.cloudfoundry.com/entries/21014643-Grails-Spring-Security-deployment-problem
-        // to fix cf/springsecurity issue
         compile ":webxml:1.4.1"
     }
 }
