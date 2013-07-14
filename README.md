@@ -332,7 +332,7 @@ git checkout step7_todo
 
 ### 3. Your TODO
 #### 3.1 TODO 1: Add a new attribute in domain class
-In Checkin.groovy, by convention every attribute of type **byte[]** is considerered as a photo. 
+In Checkin.groovy, by convention every attribute of type **byte[]** is considerered as a photo. Create one field called photo
 No need to re-generate scaffolded view: be carefull not to loose all your work on checkin view!
 
 #### 3.2 TODO 2: Photo should be optional. 
