@@ -78,6 +78,32 @@ threecircles.view.userview = function (model, elements) {
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
+    }
+
+    var resetForm = function (form) {
+        $('input[data-type="date"]').each(function() {
+            $(this).scroller('destroy').scroller({
+                preset: 'date',
+                theme: 'default',
+                display: 'modal',
+                mode: 'scroller',
+                dateOrder: 'mmD ddyy'
+            });
+        });
+        var div = $("#" + form);
+        if(div) {
+            if (div[0]) {
+                div[0].reset();
+            }
+            $.each(div.find('input:hidden'), function(id, input) {
+                if ($(input).attr('type') != 'file') {
+                    $(input).val('');
+                } else {
+                    $(input).parent().css('background-image', 'url("images/camera.png")');
+                    $(input).attr('data-value', '');
+                }
+            });
+        }
     };
 
     var createListItem = function (element) {
