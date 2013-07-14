@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.geolocation = function () {
+threecircles.view.geolocation = function () {
     var that = {};
     that.map = null;
 
@@ -46,7 +46,7 @@ threecirclesconfess.view.geolocation = function () {
             content: content
         };
         that.map.setCenter(options.position);
-    };
+    }
 
     that.showMapBackground = function(canvas, place) {
         var pos = new google.maps.LatLng(43.7, 7.2);

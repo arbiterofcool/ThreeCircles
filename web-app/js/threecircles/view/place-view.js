@@ -4,8 +4,13 @@ threecircles.view = threecircles.view || {};
 threecircles.view.placeview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
     var mapServiceList = grails.mobile.map.googleMapService();
     var mapServiceForm = grails.mobile.map.googleMapService();
+
 
     // Register events
     that.model.listedItems.attach(function (data) {
@@ -102,7 +107,6 @@ threecircles.view.placeview = function (model, elements) {
         hideListDisplay();
         showMapDisplay();
     });
-
     that.elements.list.on('pageinit', function (e) {
         that.listButtonClicked.notify();
     });
@@ -131,7 +135,6 @@ threecircles.view.placeview = function (model, elements) {
     });
 
     that.elements.add.on('vclick', function (event) {
-        $(this).addClass('ui-disabled');
         event.stopPropagation();
         $('#form-update-place').validationEngine('hide');
         $('#form-update-place').validationEngine({promptPosition: 'bottomLeft'});
@@ -153,14 +156,18 @@ threecircles.view.placeview = function (model, elements) {
 
     var showElement = function (id) {
         resetForm('form-update-place');
+        showDependentElement(id);
         var element = that.model.items[id];
         $.each(element, function (name, value) {
             var input = $('#input-place-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
             } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -174,6 +181,10 @@ threecircles.view.placeview = function (model, elements) {
         $('#delete-place').show();
         $.mobile.changePage($('#section-show-place'));
     };
+
+    var showDependentElement = function (id) {
+        var element = that.model.items[id];
+    }
 
     var resetForm = function (form) {
         $('input[data-type="date"]').each(function() {

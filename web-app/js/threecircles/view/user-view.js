@@ -5,6 +5,11 @@ threecircles.view.userview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
 
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-user').empty();

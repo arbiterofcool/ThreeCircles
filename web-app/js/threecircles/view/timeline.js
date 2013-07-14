@@ -1,7 +1,7 @@
-var threecirclesconfess = threecirclesconfess || {};
-threecirclesconfess.view = threecirclesconfess.view || {};
+var threecircles = threecircles || {};
+threecircles.view = threecircles.view || {};
 
-threecirclesconfess.view.timeline = function () {
+threecircles.view.timeline = function () {
     var that = {};
     var TEN_MINUTES = 600000;
     var ONE_DAY = 86400000;
@@ -12,7 +12,7 @@ threecirclesconfess.view.timeline = function () {
 
     that.getWhenInformation = function (date) {
         return whenAsTimeline = that.getWhenInformationFromDate(date);
-    }
+    };
 
     that.getWhenInformationFromDate = function (date) {
         var now = new Date().getTime();
@@ -45,7 +45,7 @@ threecirclesconfess.view.timeline = function () {
             }
         }
         return "over a year ago";
-    }
+    };
 
     var integerDivision = function (numerator, denominator) {
         var remainder = numerator % denominator;
@@ -57,7 +57,7 @@ threecirclesconfess.view.timeline = function () {
             quotient = Math.ceil( quotient );
         }
         return {remainder: remainder, quotient: quotient};
-    }
+    };
 
     return that;
 };
