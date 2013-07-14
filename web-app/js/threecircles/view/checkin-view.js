@@ -4,11 +4,17 @@ threecircles.view = threecircles.view || {};
 threecircles.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
-    var timeline = threecirclesconfess.view.timeline();
-    var geolocationSearch = threecirclesconfess.view.geolocation();
-    var geolocationCheckin = threecirclesconfess.view.geolocation();
-    var geolocationBackground = threecirclesconfess.view.geolocation()
+    var timeline = threecircles.view.timeline();
+    var geolocationSearch = threecircles.view.geolocation();
+    var geolocationCheckin = threecircles.view.geolocation();
+    var geolocationBackground = threecircles.view.geolocation()
 
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
+
+    // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-checkin').empty();
         var key, items = model.getItems();
