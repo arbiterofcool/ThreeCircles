@@ -4,10 +4,15 @@ threecircles.view = threecircles.view || {};
 threecircles.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
-    var timeline = threecirclesconfess.view.timeline();
-    var geolocationSearch = threecirclesconfess.view.geolocation();
-    var geolocationCheckin = threecirclesconfess.view.geolocation();
-    var geolocationBackground = threecirclesconfess.view.geolocation()
+    var timeline = threecircles.view.timeline();
+    var geolocationSearch = threecircles.view.geolocation();
+    var geolocationCheckin = threecircles.view.geolocation();
+    var geolocationBackground = threecircles.view.geolocation()
+
+    that.init = function () {
+        that.listButtonClicked.notify();
+    };
+
 
     // Register events
     that.model.listedItems.attach(function (data) {
@@ -58,7 +63,6 @@ threecircles.view.checkinview = function (model, elements) {
             '<li><img src="img/ico-fire.png" />First Bar in 2 months!</li></ul>';
         return html;
     };
-
     //-----------------------------------------------------------------------------
     //  TODO on checkin submit
     //-----------------------------------------------------------------------------
@@ -159,22 +163,26 @@ threecircles.view.checkinview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         createElement();
+        that.editButtonClicked.notify();
     });
 
     var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
-        that.editButtonClicked.notify();
         showElement(dataId);
+        that.editButtonClicked.notify(function () {
+            showDependentElement(dataId);
+        });
     };
 
     var createElement = function () {
         resetForm('form-update-checkin');
         $.mobile.changePage($('#section-show-checkin'));
         $('#delete-checkin').css('display', 'none');
+        that.editButtonClicked.notify(function () {
+        });
     };
 
     var storeLatLng = function(place) {
@@ -214,6 +222,28 @@ threecircles.view.checkinview = function (model, elements) {
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
+        showDependentElement(id);
+        var element = that.model.items[id];
+        $.each(element, function (name, value) {
+            var input = $('#input-checkin-' + name);
+            if (input.attr('type') != 'file') {
+                input.val(value);
+            } else {
+                if (value) {
+                    var img = grails.mobile.camera.encode(value);
+                    input.parent().css('background-image', 'url("' + img + '")');
+                    input.attr('data-value', img);
+                }
+            }
+            if (input.attr('data-type') == 'date') {
+                input.scroller('setDate', (value === '') ? '' : new Date(value), true);
+            }
+        });
+        $('#delete-checkin').show();
+        $.mobile.changePage($('#section-show-checkin'));
+    };
+
+    var showDependentElement = function (id) {
         var element = that.model.items[id];
         var value = element['owner.id'];
         if (!value) {
@@ -253,26 +283,12 @@ threecircles.view.checkinview = function (model, elements) {
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
-        $.each(element, function (name, value) {
-            var input = $('#input-checkin-' + name);
-            if (input.attr('type') != 'file') {
-                input.val(value);
-            } else {
-                var img = grails.mobile.camera.encode(value);
-                input.parent().css('background-image', 'url("' + img + '")');
-            }
-            if (input.attr('data-type') == 'date') {
-                input.scroller('setDate', (value === '') ? '' : new Date(value), true);
-            }
-        });
-        $('#delete-checkin').show();
-        $.mobile.changePage($('#section-show-checkin'));
     };
 
+    //-----------------------------------------------------------------------------
+    //  TODO on checkin submit
+    //-----------------------------------------------------------------------------
     var resetForm = function (form) {
-        //-----------------------------------------------------------------------------
-        //  TODO on checkin submit
-        //-----------------------------------------------------------------------------
         $('#textarea-1').val('');
         $('input[data-type="date"]').each(function() {
             $(this).scroller('destroy').scroller({
@@ -314,6 +330,7 @@ threecircles.view.checkinview = function (model, elements) {
             });
             select.val(options[0]);
         }
+        select.selectmenu("refresh");
     };
 
     var renderDependentList = function (dependentName, items) {
