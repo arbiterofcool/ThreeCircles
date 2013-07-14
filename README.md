@@ -269,7 +269,7 @@ git checkout step6_todo
 ```
 ### 2. We've DONE it for you
 - In index.html, section with id **checkin** has been refactored to apply CSS and match our use case
-- In checkin-view.js, we initialize our third map **canvas_map3** with
+- In checkin-view.js, we initialize on pageshow jqm event our third map **map_canvas3** with
 
 ```java
     $("#checkin").on( "pageshow", function (event) {
@@ -280,8 +280,8 @@ git checkout step6_todo
 - In geolocation.js, use [google info window](https://developers.google.com/maps/documentation/javascript/reference#InfoWindow) to render bubble.
 
 ### 3. Your TODO
-#### 3.1 Add behaviour on button id **checkin-submit**
-- search for // TODO 
+#### 3.1 TODO 1: Add behaviour when click on checkin button
+In checkin-view.js, search TODO 1
 - format the object before sending
 
 ```java
@@ -295,26 +295,27 @@ git checkout step6_todo
            }
 ```
 
-#### 3.2 CheckinController.groovy, 
-- once a place is found with Google Places, save it to ThreeCircles database.
-- look at **event** method that triggers the event push (we'll use event push next step on view)
+#### 3.2 TODO 2: Save place server side
+In CheckinController.groovy, search TODO 2
+Once a place is found with Google Places, save it to ThreeCircles database.
+Look at **event** method that triggers the event push (we'll use event push next step on view)
 
-#### 3.2 On created, in checkin-view.js, deal with event push
+#### 3.2 TODO 3: Visualize data in time line
+On created, in checkin-view.js, deal with event push. 
+
+Let's test event push. To simulate 2 users open 2 different browsers (Chrome and Firefox for example, it has to be 2 different instance of browsers).
+
+- In Chrome, click on "check in" button on footer. 
+- Same in Firefox, click on "check in" button.
+- in chrome select a place, add a description and checkin
+- notice how Firefox get notified
 
 Event push (Grails plugin using Atmosphere framework) is doing broadcast to all browsers.  
-3musket33rs PushManager is dealing with excluding "myself". In order to know in your code if you're the one triggering 
-created callback you can user the NOTIFIED tag. NOTIFIED boolean is set true when you are notidied of somebody else event.
-In **that.model.createdItem** callback
-- add **resetForm('form-update-checkin')** call to clear the form. 
-- in **resetForm** method clear checkin bubble's text area.
-- always in **that.model.createdItem** callback, add newly created value. Use **addAndSort** for the display.
+3musket33rs PushManager is dealing with excluding "myself".
 
-```java
-   if (!data.item.NOTIFIED) {
-     // I'm being notified of a new checkin
-   }  else {
-     // I've just checked in successfully
-   }
+In order to know in your code if you're the one triggering 
+created callback you can user the NOTIFIED tag. NOTIFIED boolean is set true when you are notidied of somebody else event.
+In **that.model.createdItem** callback change page only when needed.
 ```
 ### 4. Get source code from repo
 ```java
