@@ -12,7 +12,7 @@ threecircles.view.timeline = function () {
 
     that.getWhenInformation = function (date) {
         return whenAsTimeline = that.getWhenInformationFromDate(date);
-    }
+    };
 
     that.getWhenInformationFromDate = function (date) {
         var now = new Date().getTime();
@@ -57,7 +57,7 @@ threecircles.view.timeline = function () {
             quotient = Math.ceil( quotient );
         }
         return {remainder: remainder, quotient: quotient};
-    }
+    };
 
     return that;
 };
