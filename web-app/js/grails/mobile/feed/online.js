@@ -78,7 +78,7 @@ grails.mobile.feed.online = function (cfg, store) {
             },
             cache: false,
             type: type,
-            async: false,
+            async: true,
             data: dataToSend,
             dataType: "json",
             url: url + action,
