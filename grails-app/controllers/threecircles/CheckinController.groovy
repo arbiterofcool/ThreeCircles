@@ -19,7 +19,7 @@ class CheckinController {
     }
 
     //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
+    //  TODO 2: Save new place
     //-----------------------------------------------------------------------------
     def save() {
       def jsonObject = JSON.parse(params.checkin)
