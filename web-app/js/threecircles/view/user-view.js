@@ -35,77 +35,6 @@ threecircles.view.userview = function (model, elements) {
         });
     };
 
-    var createElement = function () {
-        resetForm('form-update-user');
-        $.mobile.changePage($('#section-show-user'));
-        $('#delete-user').css('display', 'none');
-        that.editButtonClicked.notify(function () {
-        });
-    };
-
-    var showElement = function (id) {
-        resetForm('form-update-user');
-        showDependentElement(id);
-        var element = that.model.items[id];
-        $.each(element, function (name, value) {
-            var input = $('#input-user-' + name);
-            if (input.attr('type') != 'file') {
-                input.val(value);
-            } else {
-                if (value) {
-                    var img = grails.mobile.camera.encode(value);
-                    input.parent().css('background-image', 'url("' + img + '")');
-                    input.attr('data-value', img);
-                }
-            }
-            if (input.attr('data-type') == 'date') {
-                input.scroller('setDate', (value === '') ? '' : new Date(value), true);
-            }
-        });
-        $('#delete-user').show();
-        $.mobile.changePage($('#section-show-user'));
-    };
-
-    var showDependentElement = function (id) {
-        var element = that.model.items[id];
-        var friendsSelected = element.friends;
-        $.each(friendsSelected, function (key, value) {
-            var selector;
-            if (value === Object(value)) {
-                selector= '#checkbox-friends-' + value.id;
-            } else {
-                selector= '#checkbox-friends-' + value;
-            }
-            $(selector).attr('checked','checked').checkboxradio('refresh');
-        });
-    }
-
-    var resetForm = function (form) {
-        $('input[data-type="date"]').each(function() {
-            $(this).scroller('destroy').scroller({
-                preset: 'date',
-                theme: 'default',
-                display: 'modal',
-                mode: 'scroller',
-                dateOrder: 'mmD ddyy'
-            });
-        });
-        var div = $("#" + form);
-        if(div) {
-            if (div[0]) {
-                div[0].reset();
-            }
-            $.each(div.find('input:hidden'), function(id, input) {
-                if ($(input).attr('type') != 'file') {
-                    $(input).val('');
-                } else {
-                    $(input).parent().css('background-image', 'url("images/camera.png")');
-                    $(input).attr('data-value', '');
-                }
-            });
-        }
-    };
-
     var createListItem = function (element) {
         var li, a = $('<a>');
         var img = $('<img>');
@@ -119,10 +48,7 @@ threecircles.view.userview = function (model, elements) {
         });
         a.append(img);
         a.append(getText(element));
-        a.on('vclick', function(event) {
-            show(element.id, event);
-        });
-        
+
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);
