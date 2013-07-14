@@ -6,14 +6,14 @@ class Checkin {
     Place place
     User owner
     //-----------------------------------------------------------------------------
-    //  TODO picture
+    //  TODO 1: picture
     //-----------------------------------------------------------------------------
     byte[] photo
 
     static hasMany = [friends:User, comments:Comment]
 
     //-----------------------------------------------------------------------------
-    //  TODO picture
+    //  TODO 2: picture
     //-----------------------------------------------------------------------------
     static constraints = {
         photo maxSize: 20*1024*1024, nullable: true
