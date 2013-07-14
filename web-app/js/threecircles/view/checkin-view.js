@@ -64,7 +64,7 @@ threecircles.view.checkinview = function (model, elements) {
         return html;
     };
     //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
+    //  TODO 3: on checkin callback
     //-----------------------------------------------------------------------------
     that.model.createdItem.attach(function (data, event) {
         $(that.elements.save).removeClass('ui-disabled');
@@ -76,8 +76,12 @@ threecircles.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
-            //TODO
-		}
+            resetForm('form-update-checkin');
+            addAndSort(model.getItems(), data.item);
+            // TODO 3: if data.item is not coming from a Push Notification (data.item.NOTIFIED)
+            // change page with jQuery mobile $.mobile.changePage
+
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -191,10 +195,31 @@ threecircles.view.checkinview = function (model, elements) {
     });
 
     //-----------------------------------------------------------------------------
-    //  TODO on checkin submit
+    //  TODO 1: on checkin submit
     //-----------------------------------------------------------------------------
     $('#checkin-submit').on( 'vclick', function (event) {
-        //TODO
+        event.stopPropagation();
+        $('#form-update-checkin').validationEngine('hide');
+        if($('#form-update-checkin').validationEngine('validate')) {
+            var placeObj = {
+                //name: ,
+                //address: ,
+                //latitude: ,
+                //longitude:
+            };
+
+            var description = $('#textarea-1').val();
+            var obj = {
+                //description: ,
+                //'owner.id': ,
+                //place: ,
+                //when:
+            };
+            var newElement = {
+                checkin: JSON.stringify(obj)
+            };
+            that.createButtonClicked.notify(newElement, event);
+        }
     });
 
     var showElement = function (id) {
