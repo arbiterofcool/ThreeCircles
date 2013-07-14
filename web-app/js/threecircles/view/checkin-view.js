@@ -55,7 +55,8 @@ threecircles.view.checkinview = function (model, elements) {
         });
         html += '</div>';
         //-----------------------------------------------------------------------------
-        //  TODO picture
+        //  TODO 6: Display picture on timeline
+        //  Uncomment lines
         //-----------------------------------------------------------------------------
         if(element.photo) {
             var base64 = grails.mobile.camera.encode(element.photo);
@@ -206,11 +207,11 @@ threecircles.view.checkinview = function (model, elements) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
-            //$(this).addClass('ui-disabled');
             var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
             var description = $('#textarea-1').val();
             //-----------------------------------------------------------------------------
-            //  TODO picture
+            //  TODO 5: Retrieve photo from input
+            //  Uncomment
             //-----------------------------------------------------------------------------
             var photo = $('#input-checkin-photo');
             var photoValue = "";
