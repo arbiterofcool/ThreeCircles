@@ -200,12 +200,15 @@ git checkout step3_done
 
 ## Step4: Get timeline with time information
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step4_todo
 ```
+### 2. We've DONE it for you
 You will get a new file timeline.js that you will complete for the time information.
-### Add JS file timeline.js
+
+### 3. Your TODO
+#### 3.1 Add JS file timeline.js
 - go to timeline.js
 Note 3musket33rs JS coding à la Crockford (function first!).
 Add a method which takes a Date as long and returns information like:
@@ -213,55 +216,58 @@ Add a method which takes a Date as long and returns information like:
 - go to checkin-view.js (search for //TODO) add call to newly created method to add time information.
 - go to index.html to include new js file
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step4_done
 ```
 
 ## Step5: Google places
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step5_todo
 ```
+### 2. We've DONE it for you
 - you will get a new file geolocation.js that you will complete.
 - in index.html, google API  and geolocation.js has been included
 - in index.html, section with id "section-show-checkin" has been refactored to apply CSS and match our use case. 
 - in checkin-view.js, we initialized our maps with
+- in geolocation.js, a google map is created from canvas from canvas id
+Using Google API: [google.maps.Map](https://developers.google.com/maps/documentation/javascript/reference#Map)
 
 ```java
     $("#section-show-checkin").on( "pageshow", function (event) {
         geolocationSearch.showMapWithPlaces('map_canvas2', "list-place", storeLatLng);
     });
 ```
-### In geolocation.js seach // TODO search places
-In the method **showMapWithPlaces**
-
-- a google map is created from canvas from canvas id
-
-Using Google API: [google.maps.Map](https://developers.google.com/maps/documentation/javascript/reference#Map)
-
-- once navigator got our current position with HTML5 **navigator.geolocation**, use google places API
-
+### 3. Your TODO
+In geolocation.js, seach "TODO search places". The goal of this step is
+to make you discover useful Google services when doing feolocation stuff.
+Once navigator got our current position with HTML5 **navigator.geolocation**, use google places API
+#### 3.1 TODO 1: initialise google places service
+See API documentation
 Use Google places API: [google.maps.places](https://developers.google.com/maps/documentation/javascript/reference#PlacesService)
-
+#### 3.2 TODO 2: In PlacesService find the places close by with all details
+#### 3.3 TODO 3: In search callback method, calculate the distance between you current
+location and the point of interest
 Use Google geometry API: [google.maps.geometry.spherical](https://developers.google.com/maps/documentation/javascript/reference#spherical)
-
+#### 3.4 TODO 4: Create a marker and add it to the map
 Use Google Marker API: [google.maps.Marker](https://developers.google.com/maps/documentation/javascript/reference#Marker)
 
 Use Google position API: [google.maps.LatLng](https://developers.google.com/maps/documentation/javascript/reference#LatLng)
 
-### Get source code from repo
+### 4. Get source code from repo
 
 ```java
 git checkout step5_done
 ```
 ## Step6: Checkin!
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step6_todo
 ```
+### 2. We've DONE it for you
 - In index.html, section with id **checkin** has been refactored to apply CSS and match our use case
 - In checkin-view.js, we initialize our third map **canvas_map3** with
 
@@ -273,7 +279,8 @@ git checkout step6_todo
 - In checkin-view.js, **addAndSort** method added to render timeline with latest checkin first.
 - In geolocation.js, use [google info window](https://developers.google.com/maps/documentation/javascript/reference#InfoWindow) to render bubble.
 
-### Add behaviour on button id **checkin-submit**
+### 3. Your TODO
+#### 3.1 Add behaviour on button id **checkin-submit**
 - search for // TODO 
 - format the object before sending
 
@@ -288,11 +295,11 @@ git checkout step6_todo
            }
 ```
 
-### CheckinController.groovy, 
+#### 3.2 CheckinController.groovy, 
 - once a place is found with Google Places, save it to ThreeCircles database.
 - look at **event** method that triggers the event push (we'll use event push next step on view)
 
-### On created, in checkin-view.js, deal with event push
+#### 3.2 On created, in checkin-view.js, deal with event push
 
 Event push (Grails plugin using Atmosphere framework) is doing broadcast to all browsers.  
 3musket33rs PushManager is dealing with excluding "myself". In order to know in your code if you're the one triggering 
@@ -309,31 +316,34 @@ In **that.model.createdItem** callback
      // I've just checked in successfully
    }
 ```
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step6_done
 ```
 ## Step7: Let's take a picture
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step7_todo
 ```
-### Add a new attribute in Checkin.groovy search for // TODO picture
+### 2. We've DONE it for you
+
+### 3. Your TODO
+#### 3.1 Add a new attribute in Checkin.groovy search for // TODO picture
 - By convention every attribute of type **byte[]** is considerered as a photo. 
 No need to re-generate scaffolded view: be carefull not to loose all your work on checkin view!
 - Photo should be optional. See how to add to define 
 [constraints](http://grails.org/doc/latest/ref/Constraints/Usage.html) in Grails.
 - Photo should have size of 20Mb
 
-### in geolocation.js, 
+#### 3.2 in geolocation.js, 
 - in the bubble window, add an input of type **file** with id **input-checkin-photo**
 
-### in checkin-view.js,
+#### 3.3 in checkin-view.js,
 - on **checkin-submit** click send picture within the form
 - modify **createListItemCustom** to display picture if present
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step7_done
 ```
@@ -343,30 +353,34 @@ This step ** does not ** have a TO DO section.
 
 You can rest a bit ;-)
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step8_done
 ```
+### 2. We've DONE it for you
+
 Here is what was done for you:
 
 - in checkin-view.js, generated code has been cleaned to leave only what's needed
 - place-index.html & user-index.html has been merge in a single page index.html
 - place-view.js & user-view.js has been cleaned. 
 
+### 3. Your TODO
+Nothing! just test it to see where we are...
+
 ## Step9: Login
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step9_todo
 ```
+### 2. We've DONE it for you
 You will get:
 - in **index.html** a new section with id **login-page** has been added for the login form.
 - checkin-model.js and checkin-controller.js new files
 
-### MVC
 3musket33rs includes a very easy custom MCV in JavaScript. As we've seen ealier this MCV catters for the default CRUD operations.
 For exemple see the update flow explained below:
-
 
 ![3musket33rs MVC](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/mvc.png "3musket33rs MVC")
 
@@ -381,50 +395,53 @@ we need to extend Model.
 
 ![3musket33rs MVC](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/custom.png "3musket33rs MVC")
 
-### CheckinController server side
+### 3. Your TODO
+#### 3.1 CheckinController server side
 In CheckinController.groovy:
 - in login method: get user from params 
 - if user not found or wrong password send error message
 - if user found and password ok retrun all my checkins plus the one from my friends
 
-### Custom view
+#### 3.2 Custom view
 In **index.html**:
 
 - add a new anchar with id **logged-username**. This anchor will be used to display the firstname of the logged user.
 - on button with id **submit-login** clicked submit login
 - on callback, render the list as previously (**addAnsSort** method), refresh **logged-username** with firstname
  
-### Custom Controller
+#### 3.3 Custom Controller
 In **checkin-controller.js**:
 
 - add attached behaviour for **loginButtonClicked** event: this is the place where you actually do the ajax call.
 
-### Custom Model
+#### 3.4 Custom Model
 In **checkin-model.js**:
 
 - register **logged** event
 - in **login** method store firstname and list of checkins in the model
 
-### Boostrap revisited
+#### 3.5 Boostrap revisited
 In Boostrap.groovy, register yourself with you name and password and add your friends too.
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step9_done
 ```
 
 ## Step10: Display my friends
 
-### Get source code from repo
+### 1. Get source code from repo
 ```java
 git checkout step10_todo
 ```
+### 2. We've DONE it for you
 
-### Add sesssion
+### 3. your TODO
+#### 3.1 Add sesssion
 - in **CheckinController.groovy**, once logged store user insession
 - in **UserController.groovy**, retrieve user and display only his friend to friend view.
 
-### Get source code from repo
+### 4. Get source code from repo
 ```java
 git checkout step10_done
 ```
