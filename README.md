@@ -391,17 +391,14 @@ You will get:
 - in **checkin-view.js**, login\logout methods and callbacks have been implemented.
 - **checkin-model.js** and **checkin-controller.js** new files. If you want to know more on those two files read note below.
 
-```java
 **NOTE: ** 3musket33rs includes a very easy custom MCV in JavaScript. As we've seen ealier this MCV catters for the default CRUD operations.
 Most of the time those CRUD operations would be enough for your need. Now that we want to add a new operation to login. We need to extend Controller to do our cutom ajax call. If we want to add data to the model (like let's say the firstname of the user logged)
 we need to extend Model.
-```
 
 If you run your app in step9_todo, you get a new login page but on login, you bump into 500. Your turn to fix that...
 ### 3. Your TODO
 #### TODO 1: Generate User and UserRole
 run 
-
 ```java
 grails s2-quickstart threecircles User Role
 ```
@@ -411,8 +408,8 @@ when prompted to overwrite User, answer yes, but once User is generated add back
  String lastname
  static hasMany = [friends:User]
 ```
-
 See [Spring Security plugin documentation page](http://grails.org/plugin/spring-security-core) for more details.
+
 #### TODO 2: Adding @Secure
 In CheckinController.groovy, 
 - add annotation at class level with IS_AUTHENTICATED_REMEMBERED rule. 
