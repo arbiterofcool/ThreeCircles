@@ -26,15 +26,19 @@
 
     <img style="display: block;margin: auto;padding:1em" src="img/ThreeCircle.png"/>
 
-    <form id="form-update-user" name="form-update-user">
+    <form id="form-update-user" name="form-update-user" action='j_spring_security_check' method='POST'>
         <div style="padding-left:3em;padding-right:3em">
             <input style="text-align: center;" data-theme="e" type="text" class="validate[required]" placeholder="username" name="j_username" id="username" value=""/>
             <input style="text-align: center;" data-theme="e" type="password" placeholder="password" name="j_password" id="password" value=""/>
+            <label  style="text-align: center;" for='remember_me'>Remember me</label>
+            <input type='checkbox' class='chk' id='remember_me'
+                   name='_spring_security_remember_me'/>
             <br/>
             <a data-role="button" data-theme="e" id="submit-login">Login</a>
         </div>
 
         <input type="hidden" name="id" id="input-user-id"/>
+        <input type="hidden" name="ajax" id="ajax" value="true"/>
         <input type="hidden" name="version" id="input-user-version"/>
         <input type="hidden" name="class" id="input-user-class"/>
     </form>
@@ -58,9 +62,6 @@
                     <input data-theme="c" class="search-header" placeholder="Find a place to go"/>
                 </li>
                 <li class="list-icon">
-                    <!---------------------------------------------->
-                    <!-- TODO: add name with id: logged-username -->
-                    <!---------------------------------------------->
                     <a id="logged-username" href="" data-role="button" data-transition="fade" >&nbsp;</a>
                 </li>
             </ul>

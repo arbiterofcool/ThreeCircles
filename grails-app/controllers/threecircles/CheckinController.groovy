@@ -6,11 +6,11 @@ import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 
 //-----------------------------------------------------------------------------
-// TODO2: add annotation with IS_AUTHENTICATED_REMEMBERED
+// TODO 2: add annotation with IS_AUTHENTICATED_REMEMBERED
 //-----------------------------------------------------------------------------
 class CheckinController {
     //-----------------------------------------------------------------------------
-    // TODO2: inject spring security service
+    // TODO 2: inject spring security service
     //-----------------------------------------------------------------------------
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
