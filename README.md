@@ -340,10 +340,11 @@ See how to add to define
 [constraints](http://grails.org/doc/latest/ref/Constraints/Usage.html) in Grails.
 Photo should have size of 20Mb
 
-#### 3.3 TODO 3: 
+#### 3.3 TODO 3: add input for photo
 In geolocation.js, in the bubble window, add an input of type **file** with id **input-checkin-photo**
-#### 3.4 TODO 4:
-In geolocation.js, use 3musketeers plugin camera service in grails.mobile.camera to take the picture and display
+
+#### 3.4 TODO 4: take picture polyfill
+In geolocation.js, use 3musketeers plugin camera service in grails.mobile.camera to take the picture and display it.
 
 #### 3.5 TODO 5: Retrieve photo from input
 In checkin-view.js, on **checkin-submit** uncomment line.
@@ -376,7 +377,7 @@ Here is what was done for you:
 ### 3. Your TODO
 Nothing! just test it to see where we are...
 
-## Step9: Login
+## Step9: Spring Security for login
 
 ### 1. Get source code from repo
 ```java
@@ -385,51 +386,45 @@ git checkout step9_todo
 
 ### 2. We've DONE it for you
 You will get:
+- in BuildConfig.groovy, Spring Security dependency was added
 - in **index.html** a new section with id **login-page** has been added for the login form.
-- checkin-model.js and checkin-controller.js new files
+- in **checkin-view.js**, login\logout methods and callbacks have been implemented.
+- **checkin-model.js** and **checkin-controller.js** new files. If you want to know more on those two files read note below.
 
-3musket33rs includes a very easy custom MCV in JavaScript. As we've seen ealier this MCV catters for the default CRUD operations.
-For exemple see the update flow explained below:
+```java
+**NOTE: ** 3musket33rs includes a very easy custom MCV in JavaScript. As we've seen ealier this MCV catters for the default CRUD operations.
+Most of the time those CRUD operations would be enough for your need. Now that we want to add a new operation to login. We need to extend Controller to do our cutom ajax call. If we want to add data to the model (like let's say the firstname of the user logged)
+we need to extend Model.
+```
 
-![3musket33rs MVC](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/mvc.png "3musket33rs MVC")
-
-Most of the time those CRUD operations could be enough for your need. for now we have only extended the view 
-in **checkin-view.js** file.
-
-Now that we want to add a new operation to login. We need to extend Controller to do our cutom ajax call. 
-In the case of login we are not interested in offline mode so we won't implement our feed method. 
-Extending Controller is enough.
-If we want to add data to the model (like let's say the firstname of the user logged)
-we need to extend Model. 
-
-![3musket33rs MVC](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/custom.png "3musket33rs MVC")
-
+If you run your app in step9_todo, you get a new login page but on login, you bump into 500. Your turn to fix that...
 ### 3. Your TODO
-#### 3.1 CheckinController server side
-In CheckinController.groovy:
+#### TODO 1: Generate User and UserRole
+run 
+
+```java
+grails s2-quickstart threecircles User Role
+```
+when prompted to overwrite User, answer yes, but once User is generated add back those fields:
+```java
+ String firstname
+ String lastname
+ static hasMany = [friends:User]
+```
+
+See [Spring Security plugin documentation page](http://grails.org/plugin/spring-security-core) for more details.
+#### TODO 2: Adding @Secure
+In CheckinController.groovy, 
+- add annotation at class level with IS_AUTHENTICATED_REMEMBERED rule. 
+- inject spring security service
+See [Peter simplified spring source with Grails blog post] (http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/) for more details.
+
+#### TODO 3: Only my friends checkins in my timeline
 - in login method: get user from params 
 - if user not found or wrong password send error message
 - if user found and password ok retrun all my checkins plus the one from my friends
 
-#### 3.2 Custom view
-In **index.html**:
-
-- add a new anchar with id **logged-username**. This anchor will be used to display the firstname of the logged user.
-- on button with id **submit-login** clicked submit login
-- on callback, render the list as previously (**addAnsSort** method), refresh **logged-username** with firstname
- 
-#### 3.3 Custom Controller
-In **checkin-controller.js**:
-
-- add attached behaviour for **loginButtonClicked** event: this is the place where you actually do the ajax call.
-
-#### 3.4 Custom Model
-In **checkin-model.js**:
-
-- register **logged** event
-- in **login** method store firstname and list of checkins in the model
-
-#### 3.5 Boostrap revisited
+#### TODO 4: Boostrap revisited
 In Boostrap.groovy, register yourself with you name and password and add your friends too.
 
 ### 4. Get source code from repo
