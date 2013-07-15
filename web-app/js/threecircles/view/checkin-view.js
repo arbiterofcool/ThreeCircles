@@ -4,6 +4,8 @@ threecircles.view = threecircles.view || {};
 threecircles.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+    that.loginButtonClicked = grails.mobile.event();
+    that.logoutButtonClicked = grails.mobile.event();
     var timeline = threecircles.view.timeline();
     var geolocationSearch = threecircles.view.geolocation();
     var geolocationCheckin = threecircles.view.geolocation();
@@ -14,13 +16,62 @@ threecircles.view.checkinview = function (model, elements) {
     };
 
 
-    // Register events
-    that.model.listedItems.attach(function (data) {
-        $('#list-checkin').empty();
-        var key, items = model.getItems();
-        addAndSort(items);
-        $('#list-checkin').listview('refresh');
+    var displayTimeline = function (data, event) {
+        if (data.items.errors) {
+            $.each(data.items.errors, function(index, error) {
+                $('#input-user-' + error.field).validationEngine('showPrompt',error.message, 'fail');
+            });
+            event.stopPropagation();
+        } else if (data.items.message || data.items.error) {
+            showGeneralMessage(data.items.message ? data.items.message : data.items.error, event);
+        } else {
+            if (!data.items.NOTIFIED) {
+                var a = $('<a>');
+                a.attr({
+                    id: 'logged-username',
+                    'data-role': 'button',
+                    'data-transition': 'fade'
+                });
+                a.on('vclick', function(event) {
+                    logout(event);
+                });
+                a.text('Logout '+ model.username);
+
+                $('#logged-username').replaceWith(a);
+                $('#logged-username').button();
+                $('#list-checkin').empty();
+                var key, items = model.getItems();
+                addAndSort(items);
+                $('#list-checkin').listview('refresh');
+                $.mobile.changePage($('#section-list-checkin'));
+            }
+        }
+    };
+
+    that.model.logged.attach(displayTimeline);
+
+    that.model.loggedOut.attach(function(event) {
+        top.location='';
     });
+
+    $('#submit-login').on('click', function (event) {
+        event.stopPropagation();
+        $('#form-update-user').validationEngine('hide');
+        if($('#form-update-user').validationEngine('validate')) {
+            var obj = grails.mobile.helper.toObject($('#form-update-user').find('input, select'));
+            var newElement = obj;
+            that.loginButtonClicked.notify(newElement, event);
+        }
+    });
+
+    var logout = function (event) {
+        event.stopPropagation();
+        that.logoutButtonClicked.notify({}, event);
+    };
+
+
+    // Register events
+    that.model.listedItems.attach(displayTimeline);
 
     var addAndSort = function(items, item) {
         $('#list-checkin-parent').empty();
@@ -35,7 +86,7 @@ threecircles.view.checkinview = function (model, elements) {
             var whenInfo = timeline.getWhenInformation(value.when);
             $('#list-checkin-parent').append(createListItemCustom(value, whenInfo)).trigger("create");
         });
-    }
+    };
 
     var createListItemCustom = function (element, timelineDate) {
         var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
@@ -89,11 +140,6 @@ threecircles.view.checkinview = function (model, elements) {
     });
 
     // user interface actions
-    that.elements.list.on('pageinit', function (e) {
-        that.listButtonClicked.notify();
-        geolocationBackground.showMapBackground('map_canvas', {}) ;
-    });
-
     that.elements.list.on('pageshow', function (e) {
         geolocationBackground.showMapBackground('map_canvas', {}) ;
     });
@@ -153,7 +199,7 @@ threecircles.view.checkinview = function (model, elements) {
         var div = $("#" + form);
         if(div) {
             if (div[0]) {
-            div[0].reset();
+                div[0].reset();
             }
             $.each(div.find('input:hidden'), function(id, input) {
                 if ($(input).attr('type') != 'file') {
@@ -164,47 +210,9 @@ threecircles.view.checkinview = function (model, elements) {
     };
 
     var showGeneralMessage = function(data, event) {
-        $.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, data.item.message, true );
+        $.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, data, true );
         setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
         event.stopPropagation();
     };
-
-    //-----------------------------------------------------------------------------
-    // TODO submit login
-    //-----------------------------------------------------------------------------
-
-    //-----------------------------------------------------------------------------
-    // end of TODO submit login
-    //-----------------------------------------------------------------------------
-
-     //-----------------------------------------------------------------------------
-    // TO DO register for event loginButtonClicked
-    //-----------------------------------------------------------------------------
-
-    //-----------------------------------------------------------------------------
-    // end of TODO register for event loginButtonClicked
-    //-----------------------------------------------------------------------------
-
-    //-----------------------------------------------------------------------------
-    // TO DO attach behaviour once event logged (from model) has been raised
-    //-----------------------------------------------------------------------------
-    that.model.logged.attach(function (data, event) {
-        if (data.items.errors) {
-            $.each(data.items.errors, function(index, error) {
-                $('#input-user-' + error.field).validationEngine('showPrompt',error.message, 'fail');
-            });
-            event.stopPropagation();
-        } else if (data.items.message || data.items.error) {
-            showGeneralMessage(data.items.message ? data.items.message : data.items.error, event);
-        } else {
-            if (!data.items.NOTIFIED) {
-                //TODO
-            }
-        }
-    });
-    //-----------------------------------------------------------------------------
-    // end of TODO attach behaviour once event logged (from model) has been raised
-    //-----------------------------------------------------------------------------
-
     return that;
 };

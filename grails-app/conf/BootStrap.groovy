@@ -6,6 +6,13 @@ import threecircles.Checkin
 class BootStrap {
 
     def init = { servletContext ->
+        //-----------------------------------------------------------------------------
+        // TODO 4: Modify Boostrap to fit Spring security
+        //  def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+        //  def testUser = new User(firstname: "Corinne", lastname: "Krych", username: 'me', enabled: true, password: 'password')
+        //  testUser.save()
+        //  UserRole.create testUser, userRole, true
+        //-----------------------------------------------------------------------------
 
         def testUser = new User(firstname: "Corinne", lastname: "Krych", username: 'me', enabled: true, password: 'password')
         testUser.save()
@@ -18,7 +25,9 @@ class BootStrap {
 
         User mathieu = new User(firstname: "Mathieu", lastname: "Bruyen", username: "mathieubruyen", password: "password", enabled: true);
         mathieu.save()
-
+        //-----------------------------------------------------------------------------
+        // TODO 4:
+        //-----------------------------------------------------------------------------
         Place nice = new Place(name: "Nice", latitude:43.7, longitude: 7.2, address: "town center" )
         nice.save()
 

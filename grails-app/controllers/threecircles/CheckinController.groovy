@@ -5,32 +5,38 @@ import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 
+//-----------------------------------------------------------------------------
+// TODO2: add annotation with IS_AUTHENTICATED_REMEMBERED
+//-----------------------------------------------------------------------------
 class CheckinController {
-
+    //-----------------------------------------------------------------------------
+    // TODO2: inject spring security service
+    //-----------------------------------------------------------------------------
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
     }
 
-    def login() {
-        //-----------------------------------------------------------------------------
-        // TODO retrieve user with username and password from param
-        //-----------------------------------------------------------------------------
-        // if username found and password match, find all checkin for me and my friends
-        //-----------------------------------------------------------------------------
-        // else send an error message wrong password
-        //-----------------------------------------------------------------------------
-
-        //-----------------------------------------------------------------------------
-        // end of TODO retrieve user with username and password from param
-        //-----------------------------------------------------------------------------
-    }
-
     def list() {
-      params.max = Math.min(params.max ? params.int('max') : 10, 100)
-      render Checkin.list(params) as JSON
+        //-----------------------------------------------------------------------------
+        // TODO 3:  retrieve logged user ie principal
+        // See http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/
+        //
+        // If username found and password match, find all checkin for me and my friends
+        // Send back a Json like
+        // {
+        //   fistname "corinne"
+        //   checkins [{}, {}]
+        // }
+        //-----------------------------------------------------------------------------
+
+
+        //-----------------------------------------------------------------------------
+        // end of TODO 3 retrieve user with username and password from param
+        //-----------------------------------------------------------------------------
     }
+
 
     def save() {
       def jsonObject = JSON.parse(params.checkin)
