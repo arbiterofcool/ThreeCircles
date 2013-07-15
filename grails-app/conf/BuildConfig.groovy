@@ -43,5 +43,6 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.9.1"
         build ":tomcat:$grailsVersion"
         compile ":webxml:1.4.1"
+        compile ':spring-security-core:1.2.7.3'
     }
 }
