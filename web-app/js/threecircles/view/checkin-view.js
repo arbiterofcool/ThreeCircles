@@ -51,6 +51,7 @@ threecircles.view.checkinview = function (model, elements) {
     that.model.logged.attach(displayTimeline);
 
     that.model.loggedOut.attach(function(event) {
+        //event.stopPropagation();
         top.location='';
     });
 
