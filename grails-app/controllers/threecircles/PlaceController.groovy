@@ -3,6 +3,7 @@ package threecircles
 
 
 import grails.converters.JSON
+import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -39,7 +40,12 @@ class PlaceController {
       }
       
       def asJson = placeInstance as JSON
-      event topic:"save-place", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+        userIdNotification  params.userIdNotification
+        instance  asJson.toString()
+      }
+      event topic:"save-place", data: builder.toString()
       render placeInstance as JSON
     }
     
@@ -94,7 +100,12 @@ class PlaceController {
       }
       
       def asJson = placeInstance as JSON
-      event topic:"update-place", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"update-place", data: builder.toString()
       render placeInstance as JSON
     }
 
@@ -115,7 +126,13 @@ class PlaceController {
         return
       }
       
-      event topic:"delete-place", data: placeInstance
+      def asJson = placeInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"delete-place", data: builder.toString()
       render placeInstance as JSON
     }
     
