@@ -18,11 +18,12 @@ var grails = grails || {};
 grails.mobile = grails.mobile || {};
 grails.mobile.sync = grails.mobile.sync || {};
 
-grails.mobile.sync.syncmanager = function (url, domainName, controller, store, model) {
+grails.mobile.sync.syncmanager = function (url, domainName, controller, store, model, options) {
     var that = {};
     var store = store;
     var domainName = domainName;
     var model = model;
+    var userIdNotification = options.userIdNotification;
 
     controller.onlineEvent.attach(function (item) {
         synchronization();
