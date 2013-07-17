@@ -2,7 +2,7 @@ package threecircles
 
 
 
-import grails.converters.JSON
+import grails.converters.deep.JSON
 import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
