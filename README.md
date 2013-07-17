@@ -436,17 +436,19 @@ git clone https://github.com/3musket33rs/BrowserPush.git
 
 ### 1. Your TODO
 #### TODO 1: 
+grails run-app
 cordova create ThreeCircles
 cd ThreeCircles
 cordova platform add android
 cp -r ../web-app/* www
 cordova plugin add ../../BrowserPush
 cp plugins/BrowserPush/www/browserpush.js www/
+subl www/js/threecircles/configuration-bootstrap.js
+
+change for baseURL: "http://10.0.2.2:8080/ThreeCircles/
+
 cordova build
 cordova emulate
-
-- in **CheckinController.groovy**, once logged store user insession
-- in **UserController.groovy**, retrieve user and display only his friend to friend view.
 
 ### 2. Get source code from repo
 ```java
