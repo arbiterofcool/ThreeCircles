@@ -429,84 +429,17 @@ In Boostrap.groovy, register yourself with you name and password and add your fr
 git checkout step9_done
 ```
 
-## Step10: Display my friends
+## Step10: Apache Cordova
 
-### 1. Get source code from repo
-```java
-git checkout step10_todo
-```
-### 2. We've DONE it for you
-
-### 3. your TODO
-#### 3.1 Add sesssion
+### 1. Your TODO
+#### TODO 1: n
 - in **CheckinController.groovy**, once logged store user insession
 - in **UserController.groovy**, retrieve user and display only his friend to friend view.
 
-### 4. Get source code from repo
+### 2. Get source code from repo
 ```java
-git checkout step10_done
+git checkout step9_done
 ```
-
-## Step11: In the Cloud
-### Create a cloud foundry account
-Sign up at [www.cloudfoundry.com](http://www.cloudfoundry.com)
-
-### Config
-Install cloud foundry plugin
-```java
-grails install-plugin cloud-foundry
-```
-Configure your global setting
-```java
-cd ~/.grails
-touch settings.groovy
-```
-in settings.grrovy add your cloud foundry credentials
-```
-grails.plugin.cloudfoundry.username="..."
-grails.plugin.cloudfoundry.password="..."
-```
-### Change your URL
-in **configuration-bootstrap.js**, comment localhost URL, uncomment your cloud foundry one
-
-Be creative and choose your own doamin name (we have already taken threecircles.cloudfoundry.com so do not try this one)
-Change it here with fiverectangles.cloudfoundry.com or twobubbles.cloudfoundry.com, sixtriangles.cloudfoundry.com
-
-```
-threecircles.loadConfiguration = (function () {
-    threecircles.configuration = {
-        //baseURL: "http://localhost:8080/ThreeCircles/",
-        //Uncomment before pushing to cloudfoundry
-        baseURL: "http://ThreeCircles.cloudfoundry.com/",
-        namespace: "threecircles",
-        domain:[]
-    };
-})();
-```
-### Push to cloud foundry
-Simply run the command
-```
-grails prod cf-push
-```
-When prompted for a domain name on cloudfoundry, use the one you choose just below.
-
-## Step12: PhoneGap Build
-
-### Configure your PhoneGap Build account
-Sign up at [build.phonegap.com](http://build.phonegap.com)
-### Config.groovy
-```java
-phonegapbuild.username="..."
-phonegapbuild.password="..."
-phonegapbuild.phonegapversion="2.3.0"
-```
-
-### Package you HTML and JS
-Using [3musket33rs](http://3musket33rs.github.com/) PhoneGap Build plugin, simply go to
-```java
-http://localhost:8080/ThreeCircles/app/initBuild
-```
-Use the Push button and refresh from time to time. Once ready, use QRcode to download your app onto your phone on [PhoneGap build](http://build.phonegap.com)
 
 ## Step: Now Have FUN !!
 
