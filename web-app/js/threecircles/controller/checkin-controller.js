@@ -6,9 +6,32 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
 
     var baseURL = cfg.baseURL;
 
+    //-----------------------------------------------------------------------------
+    // TODO attached a bahavior when loginButtonClicked is raised
+    // Do an ajax call (using send method provided)
+    //-----------------------------------------------------------------------------
     view.loginButtonClicked.attach(function (item, context) {
         login(item, context);
     });
+
+    view.logoutButtonClicked.attach(function (item, context) {
+        logout(item, context);
+    });
+
+    var logout = function (data, context) {
+        var loggedOut = function (data) {
+            return that.model.logout(data, context);
+        };
+
+        var callback = function (response) {
+            if (loggedOut(response)) {
+                var success = true;
+            }  else {
+                var error = false;
+            }
+        };
+        send(data, "j_spring_security_logout", callback);
+    };
 
     var login = function (data, context) {
 
@@ -19,33 +42,42 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
         var callback = function (response) {
             if (logged(response)) {
                 var success = true;
-            } else {
+            }  else {
                 var error = false;
             }
         };
-        send(data, baseURL + "login" , callback);
+        send(data, "j_spring_security_check" , callback);
     };
+    //-----------------------------------------------------------------------------
+    // end of TODO attached a bahavior when loginButtonClicked is raised
+    //-----------------------------------------------------------------------------
 
     var send = function (item, url, callback) {
         $.ajax({
             cache: false,
             type: "POST",
-            async: true,
+            async: false,
             data: item,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-Ajax-call", "true");
+            },
             dataType: "json",
             url: url,
             success: function (data) {
                 callback(data, item);
             },
             error: function (xhr) {
-                var data = [];
-                data['item'] = [];
-                data['item']['message'] = xhr.responseText;
-                callback(data, item);
+                if(xhr.status  == 200) {
+                    callback(data, item);
+                } else {
+                    var data = [];
+                    data['item'] = [];
+                    data['item']['message'] = xhr.responseText;
+                    callback(data, item);
+                }
             }
         });
     };
 
     return that;
 };
-

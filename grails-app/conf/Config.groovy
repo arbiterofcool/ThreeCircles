@@ -91,7 +91,8 @@ log4j = {
 
 // Added by the Html5 Mobile Scaffolding plugin:
 grails.converters.json.domain.include.version=true
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'threecircles.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'threecircles.UserRole'
+grails.plugins.springsecurity.authority.className = 'threecircles.Role'
 
-phonegapbuild.username="..."
-phonegapbuild.password="..."
-phonegapbuild.phonegapversion="2.3.0"

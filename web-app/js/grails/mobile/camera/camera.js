@@ -34,7 +34,7 @@ grails.mobile.camera.getPicture = function(input) {
     } else {
         input.on('click', function() {
             navigator.camera.getPicture(onSuccess, onFail, {
-                quality: 70,
+                quality: 50,
                 targetWidth: 150,
                 targetHeight: 250,
                 correctOrientation: true,
