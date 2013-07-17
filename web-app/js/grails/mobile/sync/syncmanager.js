@@ -110,6 +110,9 @@ grails.mobile.sync.syncmanager = function (url, domainName, controller, store, m
 
 
     var cfg = function (url, type, action, dataToSend, successCallback) {
+        if (dataToSend) {
+            dataToSend.userIdNotification = userIdNotification;
+        }
         return {
             cache: false,
             type: type,
