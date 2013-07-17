@@ -3,6 +3,7 @@ package threecircles
 
 
 import grails.converters.JSON
+import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -40,7 +41,12 @@ class UserController {
       }
       
       def asJson = userInstance as JSON
-      event topic:"save-user", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+        userIdNotification  params.userIdNotification
+        instance  asJson.toString()
+      }
+      event topic:"save-user", data: builder.toString()
       render userInstance as JSON
     }
     
@@ -99,7 +105,12 @@ class UserController {
       }
       
       def asJson = userInstance as JSON
-      event topic:"update-user", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"update-user", data: builder.toString()
       render userInstance as JSON
     }
 
@@ -124,7 +135,13 @@ class UserController {
         return
       }
       
-      event topic:"delete-user", data: userInstance
+      def asJson = userInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"delete-user", data: builder.toString()
       render userInstance as JSON
     }
     
