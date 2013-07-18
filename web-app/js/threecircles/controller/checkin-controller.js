@@ -30,7 +30,7 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
                 var error = false;
             }
         };
-        send(data, baseURL + "j_spring_security_logout", callback);
+        send(data, baseURL + "../j_spring_security_logout", callback);
     };
 
     var login = function (data, context) {
@@ -46,7 +46,7 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
                 var error = false;
             }
         };
-        send(data, baseURL + "j_spring_security_check" , callback);
+        send(data, baseURL + "../j_spring_security_check" , callback);
     };
     //-----------------------------------------------------------------------------
     // end of TODO attached a bahavior when loginButtonClicked is raised
