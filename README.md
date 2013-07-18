@@ -479,6 +479,8 @@ adb logcat
 ```
 
 #### TODO 7: Emulator and geolocation
+See [Android Emulator section Geo] (http://developer.android.com/tools/devices/emulator.html). 
+To emulate brwoser geolocation using the emulator control console:
 ```java
 telnet localhost 5554
 
