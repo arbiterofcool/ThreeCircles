@@ -1,6 +1,9 @@
 package threecircles
 
+
+
 import grails.converters.deep.JSON
+import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -92,9 +95,14 @@ class CheckinController {
         return
       }
 
-        def asJson = checkinInstance as JSON
-        event topic:"save-checkin", data: asJson.toString()
-        render checkinInstance as JSON
+      def asJson = checkinInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+        userIdNotification  params.userIdNotification
+        instance  asJson.toString()
+      }
+      event topic:"save-checkin", data: builder.toString()
+      render checkinInstance as JSON
     }
     
     def show() {
@@ -156,7 +164,12 @@ class CheckinController {
       }
       
       def asJson = checkinInstance as JSON
-      event topic:"update-checkin", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"update-checkin", data: builder.toString()
       render checkinInstance as JSON
     }
 
@@ -185,7 +198,13 @@ class CheckinController {
         return
       }
       
-      event topic:"delete-checkin", data: checkinInstance
+      def asJson = checkinInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"delete-checkin", data: builder.toString()
       render checkinInstance as JSON
     }
     
