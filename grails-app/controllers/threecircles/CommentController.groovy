@@ -3,6 +3,7 @@ package threecircles
 
 
 import grails.converters.JSON
+import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -32,7 +33,12 @@ class CommentController {
       }
       
       def asJson = commentInstance as JSON
-      event topic:"save-comment", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+        userIdNotification  params.userIdNotification
+        instance  asJson.toString()
+      }
+      event topic:"save-comment", data: builder.toString()
       render commentInstance as JSON
     }
     
@@ -87,7 +93,12 @@ class CommentController {
       }
       
       def asJson = commentInstance as JSON
-      event topic:"update-comment", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"update-comment", data: builder.toString()
       render commentInstance as JSON
     }
 
@@ -108,7 +119,13 @@ class CommentController {
         return
       }
       
-      event topic:"delete-comment", data: commentInstance
+      def asJson = commentInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"delete-comment", data: builder.toString()
       render commentInstance as JSON
     }
     
