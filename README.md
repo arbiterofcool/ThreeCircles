@@ -433,26 +433,60 @@ git checkout step9_done
 
 git clone https://github.com/3musket33rs/BrowserPush.git
 
-
-### 1. Your TODO
-#### TODO 1: 
+### 1. Get source code from repo
+```java
+git checkout step10_done
+```
+### 2. Your TODO
+#### TODO 1: create cordova project
+```java
 grails run-app
 cordova create ThreeCircles
 cd ThreeCircles
+```
+#### TODO 2: Add android platform
+
+```java
 cordova platform add android
+```
+
+#### TODO 3: Add ThreeCircles JS
+```java
 cp -r ../web-app/* www
+```
+
+#### TODO 4: use 3musket33rs BrowserPush cordova plugin
+```java
 cordova plugin add ../../BrowserPush
 cp plugins/BrowserPush/www/browserpush.js www/
+```
+
+#### TODO 5: Android does not understand localhost!
+```
 subl www/js/threecircles/configuration-bootstrap.js
+```
 
 change for baseURL: "http://10.0.2.2:8080/ThreeCircles/
 
+#### TODO 6: Build your project anf launch it!
+```java
 cordova build
 cordova emulate
-
-### 2. Get source code from repo
+```
+To see Android logs
 ```java
-git checkout step9_done
+adb logcat
+```
+
+#### TODO 7: Emulator and geolocation
+```java
+telnet localhost 5554
+
+geo fix 44 -93
+```
+
+```
+adb -d install bin/ThreeCircles-debug.apk
 ```
 
 ## Step: Now Have FUN !!
