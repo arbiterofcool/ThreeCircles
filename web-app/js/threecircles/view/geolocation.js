@@ -70,6 +70,7 @@ threecircles.view.geolocation = function () {
 
         that.map.setCenter(new google.maps.LatLng(place.lat, place.lng));
         var html = null;
+        console.log(">>>>>>>>>>>>>>>>>1");
         var init = ($('#textarea-1').size() == 0);
         if(init) {
             html = $('<div>');
@@ -126,12 +127,16 @@ threecircles.view.geolocation = function () {
 
 
     that.showMapWithPlaces = function(canvas, pois, myFunction) {
+        console.log(">>>>>>>>>>>>>>>>>2");
         if (!that.map) {
-            that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);
+            that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);console.log(">>>>>>>>>>>>>>>>>3");
+
         }
 
         if(navigator.geolocation) {
+            console.log(">>>>>>>>>>>>>>>>>4");
             navigator.geolocation.getCurrentPosition(function(position) {
+                console.log(">>>>>>>>>>>>>>>>>5");
                 var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                 that.map.setCenter(pos);
@@ -141,15 +146,17 @@ threecircles.view.geolocation = function () {
                 };
 
                 removeMarkers();
-
+                console.log(">>>>>>>>>>>>>>>>>6");
                 var service = new google.maps.places.PlacesService(that.map);
                 service.nearbySearch(request, function (results, status) {
+                    console.log(">>>>>>>>>>>>>>>>>7");
                     if (status != google.maps.places.PlacesServiceStatus.OK) {
                         console.log('Error getting Google Place Service');
                         return;
                     }
+                    console.log(">>>>>>>>>>>>>>>>>8");
                     for (var i = 0, result; result = results[i]; i++) {
-
+                        console.log(">>>>>>>>>>>>>>>>>9");
                         var img = result.icon;
                         var name = result.name;
                         var distance = google.maps.geometry.spherical.computeDistanceBetween(pos, result.geometry.location);
@@ -179,12 +186,14 @@ threecircles.view.geolocation = function () {
 
                         markers.push(marker);
                     }
+                    console.log(">>>>>>>>>>>>>>>>>10");
                     $("#" + pois).listview("refresh");
                 });
             }, onError);
         } else {
             // Browser doesn't support Geolocation
             handleNoGeolocation(false);
+            console.log(">>>>>>>>>>>>>>>>>11");
         }
     };
     return that;

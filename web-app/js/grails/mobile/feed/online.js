@@ -68,54 +68,55 @@ grails.mobile.feed.online = function (cfg, store) {
         if (item) {
             item.userIdNotification = userIdNotification;
         }
-        $.ajax(grails.mobile.feed.online.AjaxConfig.getConfig(url, type, action, item, callback));
+        $.ajax(config.getConfig(url, type, action, item, callback));
     };
+
+    var AjaxConfig = function (on401) {
+        var that = this;
+
+        var counter = 0;
+
+        that.getConfig = function(url, type, action, dataToSend, successCallback) {
+            return {
+                beforeSend: function() {
+                    if (counter === 0) {
+                        $.mobile.showPageLoadingMsg();
+                    }
+                    counter++;
+                },
+                complete: function() {
+                    counter--;
+                    if (counter === 0) {
+                        $.mobile.hidePageLoadingMsg();
+                    }
+                },
+                cache: false,
+                type: type,
+                async: true,
+                data: dataToSend,
+                dataType: "json",
+                url: url + action,
+                success: function (data) {
+                    successCallback(data, action, dataToSend);
+                },
+                error: function (xhr) {
+                    var data = [];
+                    if (xhr.status == "401" ) {
+                        if (on401) {
+                            on401();
+                        }
+                    } else {
+                        data['message'] = xhr.responseText;
+                        successCallback(data, action, dataToSend);
+                    }
+                }
+            };
+        };
+
+        return that;
+    };
+
+    var config = AjaxConfig(on401);
 
     return that;
 };
-
-
-grails.mobile.feed.online.AjaxConfig = (function () {
-    var that = this;
-
-    var counter = 0;
-
-    that.getConfig = function(url, type, action, dataToSend, successCallback) {
-        return {
-            beforeSend: function() {
-                if (counter === 0) {
-                    $.mobile.showPageLoadingMsg();
-                }
-                counter++;
-            },
-            complete: function() {
-                counter--;
-                if (counter === 0) {
-                    $.mobile.hidePageLoadingMsg();
-                }
-            },
-            cache: false,
-            type: type,
-            async: true,
-            data: dataToSend,
-            dataType: "json",
-            url: url + action,
-            success: function (data) {
-                successCallback(data, action, dataToSend);
-            },
-            error: function (xhr) {
-                var data = [];
-                if (xhr.status == "401" ) {
-                    if (on401) {
-                        on401();
-                    }
-                } else {
-                    data['message'] = xhr.responseText;
-                    successCallback(data, action, dataToSend);
-                }
-            }
-        };
-    };
-
-    return that;
-}());
