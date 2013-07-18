@@ -2,7 +2,8 @@ package threecircles
 
 
 
-import grails.converters.deep.JSON
+import grails.converters.JSON
+import groovy.json.JsonBuilder
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -16,20 +17,9 @@ class UserController {
     }
 	
     def list() {
-       //-----------------------------------------------------------------------------
-       // TODO retrieve user from session if found display only his friends
-       //-----------------------------------------------------------------------------
-       if (session["user"]) {
-           def usernameFormSession = session["user"].username
-           def me = User.findByUsername(usernameFormSession)
-           render me.friends as JSON
-       }  else {
-           render User.list() as JSON
-       }
-       //-----------------------------------------------------------------------------
-       // end of TODO retrieve user from session if found display only his friends
-       //-----------------------------------------------------------------------------
-     }
+      params.max = Math.min(params.max ? params.int('max') : 10, 100)
+      render User.list(params) as JSON
+    }
 
     def save() {
       def jsonObject = JSON.parse(params.user)
@@ -39,11 +29,11 @@ class UserController {
          friends << User.get(it.id)
       }
       jsonObject.friends = null
-
+      
       User userInstance = new User(jsonObject)
       
       userInstance.friends = friends
-
+      
       if (!userInstance.save(flush: true)) {
         ValidationErrors validationErrors = userInstance.errors
         render validationErrors as JSON
@@ -51,7 +41,12 @@ class UserController {
       }
       
       def asJson = userInstance as JSON
-      event topic:"save-user", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+        userIdNotification  params.userIdNotification
+        instance  asJson.toString()
+      }
+      event topic:"save-user", data: builder.toString()
       render userInstance as JSON
     }
     
@@ -110,7 +105,12 @@ class UserController {
       }
       
       def asJson = userInstance as JSON
-      event topic:"update-user", data: asJson.toString()
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"update-user", data: builder.toString()
       render userInstance as JSON
     }
 
@@ -120,7 +120,7 @@ class UserController {
       userInstance.friends.each() {
         User.get(it.getId());
       }
-
+      
       if (!userInstance) {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
         render flash as JSON
@@ -135,7 +135,13 @@ class UserController {
         return
       }
       
-      event topic:"delete-user", data: userInstance
+      def asJson = userInstance as JSON
+      def builder = new JsonBuilder()
+      builder {
+          userIdNotification  params.userIdNotification
+          instance  asJson.toString()
+      }
+      event topic:"delete-user", data: builder.toString()
       render userInstance as JSON
     }
     
