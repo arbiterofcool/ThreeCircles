@@ -12,7 +12,7 @@ threecircles.loaduser = (function () {
         },
         oneToManyRelations: [ {type: 'user', name: 'friends'} ] ,
         options: {
-            offline: true,
+            offline: false,
             eventPush: true
         }
 

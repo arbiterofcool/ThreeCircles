@@ -26,7 +26,7 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
                 var error = false;
             }
         };
-        send(data, "j_spring_security_logout", callback);
+        send(data, baseURL + "../j_spring_security_logout", callback);
     };
 
     var login = function (data, context) {
@@ -42,30 +42,35 @@ threecircles.controller.checkincontroller = function (feed, model, view, cfg) {
                 var error = false;
             }
         };
-        send(data, "j_spring_security_check" , callback);
+        send(data, baseURL + "../j_spring_security_check" , callback);
     };
-
-
+ 
     var send = function (item, url, callback) {
         $.ajax({
             cache: false,
             type: "POST",
-            async: true,
+            async: false,
             data: item,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-Ajax-call", "true");
+            },
             dataType: "json",
             url: url,
             success: function (data) {
                 callback(data, item);
             },
             error: function (xhr) {
-                var data = [];
-                data['item'] = [];
-                data['item']['message'] = xhr.responseText;
-                callback(data, item);
+                if(xhr.status  == 200) {
+                    callback(data, item);
+                } else {
+                    var data = [];
+                    data['item'] = [];
+                    data['item']['message'] = xhr.responseText;
+                    callback(data, item);
+                }
             }
         });
     };
 
     return that;
 };
-

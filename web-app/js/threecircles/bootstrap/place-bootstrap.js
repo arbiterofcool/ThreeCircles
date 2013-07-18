@@ -11,7 +11,7 @@ threecircles.loadplace = (function () {
             'remove': $('#delete-place')
         },
         options: {
-            offline: true,
+            offline: false,
             eventPush: true
         }
 
