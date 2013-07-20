@@ -25,7 +25,6 @@ threecircles.view.checkinview = function (model, elements) {
     //  To help you know what JSON is returned by Controller server side, put a break point in
     //  your browser in this method and inspect element.
     //  2. remove hard coded value for 'Corinne Krych' by value coming from element etc...
-    //  3. loop for all checkins
     //  Leave harcoded place holder for pictures.
     //-----------------------------------------------------------------------------
     var createListItemCustom = function (element) {
