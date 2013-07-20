@@ -26,14 +26,25 @@ class CheckinController {
         // TODO 3:  retrieve logged user ie principal
         // See http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/
         //
-        // If username found and password match, find all checkin for me and my friends
+        ﻿        // Retrieve user logged
+        // Find all checkin for me
+        // Find all checkin of my friends
         // Send back a Json like
         // {
         //   fistname "corinne"
         //   checkins [{}, {}]
         // }
+        // with JsonBuilder
         //-----------------------------------------------------------------------------
 
+        User me = null; // Your work
+
+        def listOfCheckins = null; // Your work
+
+        def builder = new groovy.json.JsonBuilder()
+        // Your work
+        String builderString = builder.toString()
+        render builderString
 
         //-----------------------------------------------------------------------------
         // end of TODO 3 retrieve user with username and password from param
