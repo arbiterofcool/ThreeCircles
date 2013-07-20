@@ -192,9 +192,9 @@ Search for TODO in grails-app/conf/Bootstrap.groovy
 grails run-app
 ```
 - Test the application
-- Try with offline mode (in chrome switch off network, in Firefox File-> Work Offline)
-- Add/Delete Comments
-- Get back online
+- Try the offline mode (best support is in Firefox File-> Work Offline)
+- Add/Delete Checkin
+- Get back online (uncheck in Firefox File-> Work Offline)
 
 ### 4. Get source code from repo
 ```java
@@ -219,10 +219,10 @@ you will get new folders and files containing mock screen for timeline
 ### 3. Your TODO 
 Search for TODO in the project
 
-#### 3.1 Transform your index.html with css
+#### TODO 1: Transform your index.html with css
 - in index.html (search "TODO header"), in section with id **section-list-checkin** add cool header using jQuery Mobile
 
-#### 3.2 Display dynamic content
+#### TODO 2: Display dynamic content
 The js file **web-app/js/threecircles/checkin-view.js** contains the JavaScript associated with your view. 
 Let's make the content dynamic!
 In index.html (search "TODO render timeline"):
@@ -230,7 +230,6 @@ In index.html (search "TODO render timeline"):
 1. remove hard coded string'Gr8Conf US in Minneapolis' by dynamic value coming from element
 To help you know what JSON is returned by Controller server side, put a break point in your browser in this method and inspect element.
 2. remove hard coded value for 'Corinne Krych' by value coming from element etc...
-3. loop for all checkins
 Leave harcoded place holder for pictures.
 
 ### 4. Get source code from repo
@@ -245,10 +244,9 @@ git checkout step3_done
 git checkout step4_todo
 ```
 ### 2. We've DONE it for you
-You will get a new file timeline.js that you will complete for the time information.
+You will get a new file timeline.js.
 
 ### 3. Your TODO
-#### 3.1 Add JS file timeline.js
 - go to timeline.js
 Note 3musket33rs JS coding à la Crockford (function first!).
 Add a method which takes a Date as long and returns information like:
