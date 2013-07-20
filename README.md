@@ -23,7 +23,7 @@ find source code https://github.com/corinnekrych/Gr8ConfUSMobile
 - Install the virtual box: 
  * in the USB drive you will find for your operating system, virtual box and 7z intallation packages. Install them!
  * copy ubuntu.vdi.7z into a temporary directory
- * unpack it
+ * unpack it with 7z
 - Open virtual box: 
 - click on new icon on the upper tool bar
   * pick a name,
