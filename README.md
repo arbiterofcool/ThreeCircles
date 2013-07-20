@@ -499,7 +499,7 @@ cp -r ../web-app/* www
 #### TODO 4: use 3musket33rs BrowserPush cordova plugin
 ```java
 cordova plugin add ../../BrowserPush
-cp plugins/BrowserPush/www/browserpush.js www/
+cp plugins/org.threemusketeers.cordova.plugin.browserpush/www/browserpush.js www/
 ```
 
 #### TODO 5: Android does not understand localhost!
@@ -525,7 +525,7 @@ To emulate brwoser geolocation using the emulator control console:
 ```java
 telnet localhost 5554
 
-geo fix 44 -93
+geo fix 2.16 41.38
 ```
 
 ```
