@@ -20,13 +20,16 @@ find source code https://github.com/corinnekrych/Gr8ConfUSMobile
 ## Setup
 
 ### Virtual box
-- Install the virtual box: ...TODO
+- Install the virtual box: 
+ * in the USB drive you will find for your operating system, virtual box and 7z intallation packages. Install them!
+ * copy ubuntu.vdi.7z into a temporary directory
+ * unpack it
 - Open virtual box: 
 - click on new icon on the upper tool bar
   * pick a name,
   * choose the type __linux__, version __ubuntu__, press continue
   * choose at least 1Gb for memory size, press continue
-  * check __use an existing virtual hard drive file__, select __VDI__ pick the directory where you copied ubuntu.vdi, press finish
+  * check __use an existing virtual hard drive file__, select __VDI__ pick the directory where you unpacked ubuntu.vdi, press finish
 
 Once created, click on start, the virtual is started. Username / password is gr8conf / gr8conf.
 Open a terminal, in your home directory
