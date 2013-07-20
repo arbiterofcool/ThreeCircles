@@ -449,16 +449,18 @@ when prompted to overwrite User, answer yes, but once User is generated add back
 ```
 See [Spring Security plugin documentation page](http://grails.org/plugin/spring-security-core) for more details.
 
-#### TODO 2: Adding @Secure
+#### TODO 2: Adding @Secured
 In CheckinController.groovy, 
 - add annotation at class level with IS_AUTHENTICATED_REMEMBERED rule. 
-- inject spring security service
+- inject springsecurity service
 See [Peter simplified spring source with Grails blog post] (http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/) for more details.
 
 #### TODO 3: Only my friends checkins in my timeline
-- in login method: get user from params 
-- if user not found or wrong password send error message
-- if user found and password ok retrun all my checkins plus the one from my friends
+In CheckingController.groovy,
+- retrieved user logged
+- find all checkins for me
+- find all checkins of my friends
+- send back JSON with JsonBuilder
 
 #### TODO 4: Boostrap revisited
 In Boostrap.groovy, register yourself with you name and password and add your friends too.
