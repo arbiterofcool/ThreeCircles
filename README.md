@@ -528,6 +528,7 @@ telnet localhost 5554
 geo fix 2.16 41.38
 ```
 
+
 ```
 adb -d install bin/ThreeCircles-debug.apk
 ```
