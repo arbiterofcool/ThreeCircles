@@ -56,6 +56,15 @@ This is to speed up the tutorial.
 The step by step tutorial works with git branches. For each step you will find a branch **stepXX_todo** and **stepXX_done**
 Here will be the list of git commands you will need to know
 
+- Configure your env with your github account
+
+```java
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
+
+- Commit your changes
+
 ```java
 git checkout stepXX_todo // To enter in the stepXX_todo branch
 git branch               // to check in which branch you are
@@ -65,7 +74,7 @@ git commit -m "Some usefull comments" //To commit locally your changes
 git pull                 // to fetch the latest changes from the remote repo
 git push                 // to send your committed changes to the remote repo if you did a fork
 ```
-Alternalively if you don't want to commit your changes you can use
+- Alternalively if you don't want to commit your changes you can use
 
 ```java
 git stash // To put aside you changes
@@ -118,7 +127,7 @@ line removed
     "/"(view:"/index")
 ```
 
-#### 2.3 Comain classes
+#### 2.3 Domain classes
 We've added the following domain classes. Look at the class diagram
 ![class diagram](https://github.com/fabricematrat/ThreeCircles/raw/master/imagesTutorial/classDiagram.png "class diagram")
 
