@@ -74,11 +74,6 @@ git commit -m "Some usefull comments" //To commit locally your changes
 git pull                 // to fetch the latest changes from the remote repo
 git push                 // to send your committed changes to the remote repo if you did a fork
 ```
-- Alternalively if you don't want to commit your changes you can use
-
-```java
-git stash // To put aside you changes
-```
 
 ## Step1: Scaffolding
 
@@ -198,7 +193,7 @@ grails run-app
 ```
 - Test the application
 - Try with offline mode (in chrome switch off network, in Firefox File-> Work Offline)
-- Add/Delete Users for example
+- Add/Delete Comments
 - Get back online
 
 ### 4. Get source code from repo
