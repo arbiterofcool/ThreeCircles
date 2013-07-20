@@ -18,17 +18,44 @@ You will find [associated presentation](http://corinnekrych.github.com/Gr8ConfUS
 find source code https://github.com/corinnekrych/Gr8ConfUSMobile
 
 ## Setup
-### GitHub Repos
-Fork or clone this repo but also the 3musket33rs plugins
+
+### Virtual box
+- Install the virtual box: ...TODO
+- Open virtual box: 
+* click on new icon on the upper tool bar
+* pick a name,
+* choose the type __linux__, version __ubuntu__, press continue
+* choose at least 1Gb for memory size, press continue
+* check __use an existing virtual hard drive file__, select __VDI__ pick the directory where you copied ubuntu.vdi, press finish
+
+Once created, click on start, the virtual is started. Username / password is gr8conf / gr8conf.
+Open a terminal, in your home directory
+```java
+cd work
+```
+In this directory there 3 git hub repos as listed below.
+### (Optional) GitHub Repos
+If you dont have the gr8conf USB key, fork or clone this repo but also the 3musket33rs plugins
 ```java
 git clone https://github.com/3musket33rs/html5-mobile-scaffolding
-git clone https://github.com/fabricematrat/ThreeCircles.git
+git clone https://github.com/3musket33rs/ThreeCircles.git
+git clone https://github.com/3musket33rs/BrowserPush.git
 ```
-You will need also grails 2.2.3, jdk1.7, a modern browser (no IE6!)
+You will need also grails 2.2.3, jdk1.7, cordova 2.9.0, Android sdk and emulator, a modern browser (no IE6!)
+
+### Working with tutorial
+
+The tutorial is divided into 10 steps. For each steps, we splitted it into 4 sections:
+- Get source code: where you fetch stepXX_todo
+- We've DONE it for you: here you have nothing to do yourself, just read what have being setup for you. 
+This is to speed up the tutorial.
+- Your TODO: this is where you do some work. Each todo is numbered so you can easily search for it in the source code.
+- Get source code: the solution to the TODO can be found in this branch stepXX_done.
 
 ### Working with branches
 The step by step tutorial works with git branches. For each step you will find a branch **stepXX_todo** and **stepXX_done**
 Here will be the list of git commands you will need to know
+
 ```java
 git checkout stepXX_todo // To enter in the stepXX_todo branch
 git branch               // to check in which branch you are
@@ -37,6 +64,11 @@ git add -A               // to add files to be committed
 git commit -m "Some usefull comments" //To commit locally your changes
 git pull                 // to fetch the latest changes from the remote repo
 git push                 // to send your committed changes to the remote repo if you did a fork
+```
+Alternalively if you don't want to commit your changes you can use
+
+```java
+git stash // To put aside you changes
 ```
 
 ## Step1: Scaffolding
@@ -113,7 +145,7 @@ http://localhost:8080/ThreeCircles/index.html?_debugResources=y
 ```
 Note: adding _debugResources=y to reload JavaScript/CSS/HTML updates for resources plugins
 
-add your fovirites places and lokk at geolocation.
+Add your favorites places and lokk at geolocation.
 
 ### 4. Get source code from repo
 Before you get the solution push your changes
