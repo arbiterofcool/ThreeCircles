@@ -26,7 +26,7 @@ class CheckinController {
         // TODO 3:  retrieve logged user ie principal
         // See http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/
         //
-        ﻿        // Retrieve user logged
+        // Retrieve user logged
         // Find all checkin for me
         // Find all checkin of my friends
         // Send back a Json like
