@@ -19,9 +19,11 @@
     </author>
 
     <access origin="*" subdomains="true" />
-    <access origin="http://maps.googleapis.com" subdomains="true" />
-    <access origin="http://maps.gstatic.com" subdomains="true" />
-    <access origin="http://maps.google.com" subdomains="true" />
-
-
+    <preference name="load-url-timeout" value="60000"/>
+    <preference name="permissions" value="android.permission.ACCESS_COARSE_LOCATION" />
+    <preference name="permissions" value="android.permission.ACCESS_FINE_LOCATION" />
+    <preference name="permissions" value="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <plugins>
+        <plugin name="Geolocation" value= "org.apache.cordova.GeoBroker"/>
+    </plugins>
 </widget>

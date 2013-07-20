@@ -189,7 +189,7 @@ threecircles.view.geolocation = function () {
                     console.log(">>>>>>>>>>>>>>>>>10");
                     $("#" + pois).listview("refresh");
                 });
-            }, onError);
+            }, onError, {timeout : 25000, maximumAge: 65000, enableHighAccuracy:true});
         } else {
             // Browser doesn't support Geolocation
             handleNoGeolocation(false);
