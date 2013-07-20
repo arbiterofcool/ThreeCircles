@@ -14,7 +14,8 @@ with the following abstract:
 *Ready to take the mobile challenges: geolocation, offline caching, data synchronization, server side event push, camera and packaging as Hybrid using PhoneGap.*
 *At the end of the session, you will have a clone of Foursquare on your mobile, with a REST backend in Grails running on the cloud. All that with one goal in mind: have fun!* 
 
-You will find [associated presentation](http://corinnekrych.github.com/Gr8ConfUSMobile) in github find source code [https://github.com/corinnekrych/Gr8ConfUSMobile](http://corinnekrych.github.com/confess/)
+You will find [associated presentation](http://corinnekrych.github.com/Gr8ConfUSMobile) in github 
+find source code https://github.com/corinnekrych/Gr8ConfUSMobile
 
 ## Setup
 ### GitHub Repos
