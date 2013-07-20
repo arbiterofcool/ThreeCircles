@@ -370,13 +370,14 @@ git checkout step7_todo
 
 ### 3. Your TODO
 #### 3.1 TODO 1: Add a new attribute in domain class
-In Checkin.groovy, by convention every attribute of type **byte[]** is considerered as a photo. Create one field called photo
+In Checkin.groovy, by convention every attribute of type **byte[]** is considerered as a photo. 
+Create one field called photo
 No need to re-generate scaffolded view: be carefull not to loose all your work on checkin view!
 
 #### 3.2 TODO 2: Photo should be optional. 
 See how to add to define 
 [constraints](http://grails.org/doc/latest/ref/Constraints/Usage.html) in Grails.
-Photo should have size of 20Mb
+Photo should have a maximun size of 20Mb
 
 #### 3.3 TODO 3: add input for photo
 In geolocation.js, in the bubble window, add an input of type **file** with id **input-checkin-photo**
