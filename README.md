@@ -3,7 +3,8 @@ ThreeCircles: step by step tutorial
 This github repository holds all the step by step tutorial to illustrate how to use 
 [3musket33rs](http://3musket33rs.github.com/) html5-mobile-scaffolding Grails plugin. 
 
-Do you want to see step by step how to build a single page web app? This workshop was presented at [ConFESS](https://2013.con-fess.com/) and [Gr8Conf US] (http://gr8conf.us/Presentations/Mobile-App-in-minutes--not-day)
+Do you want to see step by step how to build a single page web app? This workshop was 
+presented at [ConFESS](https://2013.con-fess.com/sessions/-/details/97/Hybrid-Mobile-App-in-Minutes-Not-Days) and [Gr8Conf US] (http://gr8conf.us/Presentations/Mobile-App-in-minutes--not-day)
 with the following abstract:
 
 ***Hybrid Mobile App in minutes not days***
@@ -13,7 +14,7 @@ with the following abstract:
 *Ready to take the mobile challenges: geolocation, offline caching, data synchronization, server side event push, camera and packaging as Hybrid using PhoneGap.*
 *At the end of the session, you will have a clone of Foursquare on your mobile, with a REST backend in Grails running on the cloud. All that with one goal in mind: have fun!* 
 
-You will find associated presentation at [http://corinnekrych.github.com/confess/](http://corinnekrych.github.com/confess/)
+You will find [associated presentation](http://corinnekrych.github.com/Gr8ConfUSMobile) in github find source code [https://github.com/corinnekrych/Gr8ConfUSMobile](http://corinnekrych.github.com/confess/)
 
 ## Setup
 ### GitHub Repos
@@ -91,7 +92,7 @@ We've added the following domain classes. Look at the class diagram
 ### 3. Your TODO
 This is where you start doing some work!
 
-#### 3.1 Generate HTML5 scaffolding
+#### TODO 1: Generate HTML5 scaffolding
 for both controller and views using 3musketeers plugin script
 
 ```java
@@ -100,16 +101,18 @@ grails html-generate-all threecircles.Place
 grails html-generate-all threecircles.Comment
 grails html-generate-all threecircles.Checkin
 ```
-#### 3.2 Run the app
+#### TODO 2: Run the app
 ```java
 grails run-app
 ```
 
-#### 3.3 Go to URL
+#### TODO 3: Go to URL
 ```java
 http://localhost:8080/ThreeCircles/index.html?_debugResources=y
 ```
 Note: adding _debugResources=y to reload JavaScript/CSS/HTML updates for resources plugins
+
+add your fovirites places and lokk at geolocation.
 
 ### 4. Get source code from repo
 Before you get the solution push your changes
